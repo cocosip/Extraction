@@ -6,7 +6,7 @@ namespace Extraction
     [DependsOn(
         typeof(AbpDddDomainModule),
         typeof(ExtractionDomainSharedModule)
-    )]
+        )]
     public class ExtractionDomainModule : AbpModule
     {
 
