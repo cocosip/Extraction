@@ -15,17 +15,77 @@ namespace Extraction
         public virtual string Name { get; set; }
 
         /// <summary>
+        /// 标题
+        /// </summary>
+        public virtual string Title { get; set; }
+
+        /// <summary>
+        /// 备注
+        /// </summary>
+        public virtual string Describe { get; set; }
+
+        /// <summary>
         /// 资源
         /// </summary>
-        public virtual ICollection<ProviderResource> Resources { get; set; }
+        public virtual ICollection<ProviderResource> Resources { get; protected set; }
 
+        /// <summary>
+        /// 管道项
+        /// </summary>
+        public virtual ICollection<ProviderItem> Items { get; set; }
 
         public ExtractorProvider()
         {
             Resources = new List<ProviderResource>();
+            Items = new List<ProviderItem>();
         }
 
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="title"></param>
+        /// <param name="describe"></param>
+        public ExtractorProvider(Guid id, string name, string title, string describe) : this()
+        {
+            Id = id;
+            Name = name;
+            Title = title;
+            Describe = describe;
+        }
 
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="title"></param>
+        /// <param name="describe"></param>
+        public void Update(string name, string title, string describe)
+        {
+            Name = name;
+            Title = title;
+            Describe = describe;
+        }
+
+        /// <summary>
+        /// 添加资源
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <returns></returns>
+        public void AddResource(ProviderResource resource)
+        {
+            Resources.Add(resource);
+        }
+
+        /// <summary>
+        /// 添加项
+        /// </summary>
+        /// <param name="item"></param>
+        public void AddItem(ProviderItem item)
+        {
+            Items.Add(item);
+        }
 
     }
 }
