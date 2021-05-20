@@ -27,17 +27,17 @@ namespace Extraction
         /// <summary>
         /// 资源
         /// </summary>
-        public virtual ICollection<ProviderResource> Resources { get; protected set; }
+        public virtual ICollection<ExtractorProviderResource> Resources { get; protected set; }
 
         /// <summary>
         /// 管道项
         /// </summary>
-        public virtual ICollection<ProviderItem> Items { get; set; }
+        public virtual ICollection<ExtractorProviderItem> Items { get; set; }
 
         public ExtractorProvider()
         {
-            Resources = new List<ProviderResource>();
-            Items = new List<ProviderItem>();
+            Resources = new List<ExtractorProviderResource>();
+            Items = new List<ExtractorProviderItem>();
         }
 
         /// <summary>
@@ -47,7 +47,11 @@ namespace Extraction
         /// <param name="name"></param>
         /// <param name="title"></param>
         /// <param name="describe"></param>
-        public ExtractorProvider(Guid id, string name, string title, string describe) : this()
+        public ExtractorProvider(
+            Guid id,
+            string name,
+            string title,
+            string describe) : this()
         {
             Id = id;
             Name = name;
@@ -73,7 +77,7 @@ namespace Extraction
         /// </summary>
         /// <param name="resource"></param>
         /// <returns></returns>
-        public void AddResource(ProviderResource resource)
+        public void AddResource(ExtractorProviderResource resource)
         {
             Resources.Add(resource);
         }
@@ -82,7 +86,7 @@ namespace Extraction
         /// 添加项
         /// </summary>
         /// <param name="item"></param>
-        public void AddItem(ProviderItem item)
+        public void AddItem(ExtractorProviderItem item)
         {
             Items.Add(item);
         }

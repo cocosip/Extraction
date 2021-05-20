@@ -7,7 +7,7 @@ namespace Extraction
     /// <summary>
     /// 管道项
     /// </summary>
-    public class ProviderItem : Entity<Guid>
+    public class ExtractorProviderItem : Entity<Guid>
     {
         /// <summary>
         /// 提取器管道Id
@@ -27,11 +27,11 @@ namespace Extraction
         /// <summary>
         /// 管道对象
         /// </summary>
-        public virtual ICollection<ProviderObject> Objects { get; protected set; }
+        public virtual ICollection<ExtractorProviderObject> Objects { get; protected set; }
 
-        public ProviderItem()
+        public ExtractorProviderItem()
         {
-            Objects = new List<ProviderObject>();
+            Objects = new List<ExtractorProviderObject>();
         }
 
         /// <summary>
@@ -41,7 +41,11 @@ namespace Extraction
         /// <param name="extractorProviderId"></param>
         /// <param name="name"></param>
         /// <param name="itemType"></param>
-        public ProviderItem(Guid id, Guid extractorProviderId, string name, int itemType) : this()
+        public ExtractorProviderItem(
+            Guid id,
+            Guid extractorProviderId,
+            string name,
+            int itemType) : this()
         {
             Id = id;
             ExtractorProviderId = extractorProviderId;
@@ -64,7 +68,7 @@ namespace Extraction
         /// 添加原子对象
         /// </summary>
         /// <param name="providerObject"></param>
-        public void AddObject(ProviderObject providerObject)
+        public void AddObject(ExtractorProviderObject providerObject)
         {
             Objects.Add(providerObject);
         }

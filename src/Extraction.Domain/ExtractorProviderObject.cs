@@ -6,12 +6,12 @@ namespace Extraction
     /// <summary>
     /// 管道的对象
     /// </summary>
-    public class ProviderObject : Entity<Guid>
+    public class ExtractorProviderObject : Entity<Guid>
     {
         /// <summary>
         /// 管道项的Id
         /// </summary>
-        public virtual Guid ProviderItemId { get; set; }
+        public virtual Guid ExtractorProviderItemId { get; set; }
 
         /// <summary>
         /// 字段名称
@@ -23,7 +23,7 @@ namespace Extraction
         /// </summary>
         public virtual string ValueType { get; set; }
 
-        public ProviderObject()
+        public ExtractorProviderObject()
         {
 
         }
@@ -32,13 +32,17 @@ namespace Extraction
         /// 新增
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="providerItemId"></param>
+        /// <param name="extractorProviderItemId"></param>
         /// <param name="name"></param>
         /// <param name="valueType"></param>
-        public ProviderObject(Guid id, Guid providerItemId, string name, string valueType)
+        public ExtractorProviderObject(
+            Guid id,
+            Guid extractorProviderItemId, 
+            string name, 
+            string valueType)
         {
             Id = id;
-            ProviderItemId = providerItemId;
+            ExtractorProviderItemId = extractorProviderItemId;
             Name = name;
             ValueType = valueType;
         }

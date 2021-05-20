@@ -4,14 +4,14 @@ using Volo.Abp.Domain.Entities;
 namespace Extraction
 {
     /// <summary>
-    /// 提取器管道资源
+    /// 提取器的资源文件(每个提取器都有多个资源文件)
     /// </summary>
-    public class ProviderResource : Entity<Guid>
+    public class ExtractorInfoResource : Entity<Guid>
     {
         /// <summary>
-        /// 提取器管道Id
+        /// 提取器的Id
         /// </summary>
-        public Guid ExtractorProviderId { get; set; }
+        public Guid ExtractorInfoId { get; set; }
 
         /// <summary>
         /// 文件存储Container名称
@@ -27,6 +27,5 @@ namespace Extraction
         /// 文件类型
         /// </summary>
         public virtual int FileType { get; set; }
-
     }
 }
