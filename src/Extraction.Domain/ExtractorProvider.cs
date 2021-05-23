@@ -30,14 +30,14 @@ namespace Extraction
         public virtual ICollection<ExtractorProviderResource> Resources { get; protected set; }
 
         /// <summary>
-        /// 管道项
+        /// 管道参数定义
         /// </summary>
-        public virtual ICollection<ExtractorProviderItem> Items { get; set; }
+        public virtual ICollection<ParameterDefination> Definations { get; protected set; }
 
         public ExtractorProvider()
         {
             Resources = new List<ExtractorProviderResource>();
-            Items = new List<ExtractorProviderItem>();
+            Definations = new List<ParameterDefination>();
         }
 
         /// <summary>
@@ -83,12 +83,12 @@ namespace Extraction
         }
 
         /// <summary>
-        /// 添加项
+        /// 添加参数定义
         /// </summary>
-        /// <param name="item"></param>
-        public void AddItem(ExtractorProviderItem item)
+        /// <param name="parameterDefination"></param>
+        public void AddParameterDefination(ParameterDefination parameterDefination)
         {
-            Items.Add(item);
+            Definations.Add(parameterDefination);
         }
 
     }

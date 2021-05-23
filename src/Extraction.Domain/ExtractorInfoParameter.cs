@@ -14,6 +14,6 @@ namespace Extraction
         /// 提取器的Id
         /// </summary>
         public Guid ExtractorInfoId { get; set; }
- 
+
     }
 }
