@@ -3,7 +3,7 @@
     /// <summary>
     /// 针对提取到的数据的处理方式
     /// </summary>
-    public enum DataHandleStyle
+    public enum HandleStyle
     {
         /// <summary>
         /// 默认,直接使用提取到的数据
