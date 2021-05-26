@@ -30,6 +30,11 @@ namespace Extraction
         public virtual string Url { get; set; }
 
         /// <summary>
+        /// 描述
+        /// </summary>
+        public virtual string Describe { get; set; }
+
+        /// <summary>
         /// 资源
         /// </summary>
         public virtual ICollection<ExtractorInfoResource> Resources { get; protected set; }
@@ -46,20 +51,28 @@ namespace Extraction
         }
 
 
-        public ExtractorInfo(Guid id, Guid extractorProviderId, string name, string domain, string url) : this()
+        public ExtractorInfo(
+            Guid id,
+            Guid extractorProviderId,
+            string name,
+            string domain,
+            string url,
+            string describe) : this()
         {
             Id = id;
             ExtractorProviderId = extractorProviderId;
             Name = name;
             Domain = domain;
             Url = url;
+            Describe = describe;
         }
 
-        public void Update(string name, string domain, string url)
+        public void Update(string name, string domain, string url, string describe)
         {
             Name = name;
             Domain = domain;
             Url = url;
+            Describe = describe;
         }
 
 
@@ -72,6 +85,6 @@ namespace Extraction
         {
             Rules.Add(rule);
         }
-    
+
     }
 }

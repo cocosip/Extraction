@@ -11,7 +11,7 @@ namespace Extraction
         /// <summary>
         /// 提取器的Id
         /// </summary>
-        public Guid ExtractorInfoId { get; set; }
+        public virtual Guid ExtractorInfoId { get; set; }
 
         /// <summary>
         /// 文件存储Container名称
@@ -27,5 +27,26 @@ namespace Extraction
         /// 文件类型
         /// </summary>
         public virtual int FileType { get; set; }
+
+        public ExtractorInfoResource()
+        {
+
+        }
+
+        public ExtractorInfoResource(Guid id, Guid extractorInfoId, string container, string fileId, int fileType)
+        {
+            Id = id;
+            ExtractorInfoId = extractorInfoId;
+            Container = container;
+            FileId = fileId;
+            FileType = fileType;
+        }
+
+        public void Update(string container, string fileId, int fileType)
+        {
+            Container = container;
+            FileId = fileId;
+            FileType = fileType;
+        }
     }
 }

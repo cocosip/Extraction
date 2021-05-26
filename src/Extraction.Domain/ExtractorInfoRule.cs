@@ -47,5 +47,53 @@ namespace Extraction
         /// 描述
         /// </summary>
         public virtual string Describe { get; set; }
+
+        public ExtractorInfoRule()
+        {
+
+        }
+
+        public ExtractorInfoRule(
+            Guid id, 
+            Guid extractorInfoId, 
+            Guid rootDefinationId, 
+            Guid currentDefinationId, 
+            int extractStyle,
+            int handleStyle,
+            int dataType,
+            string ruleValue, 
+            string describe)
+        {
+            Id = id;
+            ExtractorInfoId = extractorInfoId;
+            RootDefinationId = rootDefinationId;
+            CurrentDefinationId = currentDefinationId;
+            ExtractStyle = extractStyle;
+            HandleStyle = handleStyle;
+            DataType = dataType;
+            RuleValue = ruleValue;
+            Describe = describe;
+        }
+
+        public void Update(
+            Guid extractorInfoId,
+            Guid rootDefinationId,
+            Guid currentDefinationId,
+            int extractStyle,
+            int handleStyle,
+            int dataType,
+            string ruleValue,
+            string describe)
+        {
+            ExtractorInfoId = extractorInfoId;
+            RootDefinationId = rootDefinationId;
+            CurrentDefinationId = currentDefinationId;
+            ExtractStyle = extractStyle;
+            HandleStyle = handleStyle;
+            DataType = dataType;
+            RuleValue = ruleValue;
+            Describe = describe;
+        }
+
     }
 }

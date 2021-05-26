@@ -7,7 +7,7 @@ namespace Extraction.EntityFrameworkCore
     [DependsOn(
         typeof(ExtractionDomainModule),
         typeof(AbpEntityFrameworkCoreModule)
-    )]
+        )]
     public class ExtractionEntityFrameworkCoreModule : AbpModule
     {
         public override void ConfigureServices(ServiceConfigurationContext context)
@@ -17,6 +17,7 @@ namespace Extraction.EntityFrameworkCore
                 /* Add custom repositories here. Example:
                  * options.AddRepository<Question, EfCoreQuestionRepository>();
                  */
+                options.AddDefaultRepositories(true);
             });
         }
     }

@@ -9,6 +9,8 @@ namespace Extraction
     /// </summary>
     public class ParameterDefination : Entity<Guid>
     {
+        public virtual Guid ExtractorProviderId { get; set; }
+
         /// <summary>
         /// 上级参数的Id
         /// </summary>
@@ -32,6 +34,22 @@ namespace Extraction
         public ParameterDefination()
         {
             Childrens = new List<ParameterDefination>();
+        }
+
+        public ParameterDefination(Guid id, Guid extractorProviderId, Guid? parentId, string name, int parameterType)
+        {
+            Id = id;
+            ExtractorProviderId = extractorProviderId;
+            ParentId = parentId;
+            Name = name;
+            ParameterType = parameterType;
+        }
+
+        public void Update(Guid? parentId, string name, int parameterType)
+        {
+            ParentId = parentId;
+            Name = name;
+            ParameterType = parameterType;
         }
     }
 }

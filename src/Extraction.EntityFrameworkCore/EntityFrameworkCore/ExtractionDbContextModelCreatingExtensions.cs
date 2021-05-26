@@ -1,6 +1,7 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using Volo.Abp;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 
 namespace Extraction.EntityFrameworkCore
 {
@@ -38,6 +39,92 @@ namespace Extraction.EntityFrameworkCore
                 b.HasIndex(q => q.CreationTime);
             });
             */
+
+            //提取器管道
+            builder.Entity<ExtractorProvider>(b =>
+            {
+                b.ToTable(options.TablePrefix + "ExtractorProviders", options.Schema);
+                b.ConfigureByConvention();
+
+                b.Property(p => p.Name).IsRequired().HasMaxLength(ExtractorProviderConsts.MaxNameLength);
+                b.Property(p => p.Title).IsRequired().HasMaxLength(ExtractorProviderConsts.MaxTitleLength);
+                b.Property(p => p.Describe).HasMaxLength(ExtractorProviderConsts.MaxDescribeLength);
+
+                b.HasIndex(p => p.Name);
+                b.HasMany(p => p.Resources).WithOne().HasForeignKey(p => p.ExtractorProviderId).IsRequired();
+                b.HasMany(p => p.Definations).WithOne().HasForeignKey(p => p.ExtractorProviderId).IsRequired();
+            });
+
+            //提取器管道资源
+            builder.Entity<ExtractorProviderResource>(b =>
+            {
+                b.ToTable(options.TablePrefix + "ExtractorProviderResources", options.Schema);
+                b.ConfigureByConvention();
+
+                b.Property(p => p.ExtractorProviderId).IsRequired();
+                b.Property(p => p.Container).IsRequired().HasMaxLength(ExtractorProviderResourceConsts.MaxContainerLength);
+                b.Property(p => p.FileId).IsRequired().HasMaxLength(ExtractorProviderResourceConsts.MaxFileIdLength);
+                b.Property(p => p.FileType).IsRequired();
+            });
+
+            //参数定义
+            builder.Entity<ParameterDefination>(b =>
+            {
+                b.ToTable(options.TablePrefix + "ParameterDefinations", options.Schema);
+                b.ConfigureByConvention();
+
+                b.Property(p => p.ExtractorProviderId).IsRequired();
+                b.Property(p => p.Name).IsRequired().HasMaxLength(ParameterDefinationConsts.MaxNameLength);
+                b.Property(p => p.ParameterType).IsRequired();
+
+                b.HasIndex(p => p.Name);
+            });
+
+            //管道提取器
+            builder.Entity<ExtractorInfo>(b =>
+            {
+                b.ToTable(options.TablePrefix + "ExtractorInfos", options.Schema);
+                b.ConfigureByConvention();
+
+                b.Property(p => p.ExtractorProviderId).IsRequired();
+                b.Property(p => p.Name).IsRequired().HasMaxLength(ExtractorInfoConsts.MaxNameLength);
+                b.Property(p => p.Domain).IsRequired().HasMaxLength(ExtractorInfoConsts.MaxDomainLength);
+                b.Property(p => p.Url).IsRequired().HasMaxLength(ExtractorInfoConsts.MaxUrlLength);
+                b.Property(p => p.Describe).HasMaxLength(ExtractorInfoConsts.MaxDescribeLength);
+
+                b.HasMany(p => p.Resources).WithOne().HasForeignKey(p => p.ExtractorInfoId);
+                b.HasMany(p => p.Rules).WithOne().HasForeignKey(p => p.ExtractorInfoId);
+                b.HasIndex(p => p.Name);
+            });
+
+            //提取器资源
+            builder.Entity<ExtractorInfoResource>(b =>
+            {
+                b.ToTable(options.TablePrefix + "ExtractorInfoResources", options.Schema);
+                b.ConfigureByConvention();
+
+                b.Property(p => p.ExtractorInfoId).IsRequired();
+                b.Property(p => p.Container).IsRequired().HasMaxLength(ExtractorInfoResourceConsts.MaxContainerLength);
+                b.Property(p => p.FileId).IsRequired().HasMaxLength(ExtractorInfoResourceConsts.MaxFileIdLength);
+                b.Property(p => p.FileType).IsRequired();
+            });
+
+            //提取器规则
+            builder.Entity<ExtractorInfoRule>(b =>
+            {
+                b.ToTable(options.TablePrefix + "ExtractorInfoRules", options.Schema);
+                b.ConfigureByConvention();
+
+                b.Property(p => p.ExtractorInfoId).IsRequired();
+                b.Property(p => p.RootDefinationId).IsRequired();
+                b.Property(p => p.CurrentDefinationId).IsRequired();
+                b.Property(p => p.ExtractStyle).IsRequired();
+                b.Property(p => p.HandleStyle).IsRequired();
+                b.Property(p => p.DataType).IsRequired();
+                b.Property(p => p.RuleValue).HasMaxLength(ExtractorInfoRuleConsts.MaxRuleValueLength);
+                b.Property(p => p.Describe).HasMaxLength(ExtractorInfoRuleConsts.MaxDescribeLength);
+            });
+
         }
     }
 }

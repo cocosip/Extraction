@@ -11,6 +11,12 @@ namespace Extraction.EntityFrameworkCore
          * public DbSet<Question> Questions { get; set; }
          */
 
+        public DbSet<ExtractorProvider> ExtractorProviders { get; set; }
+        public DbSet<ExtractorProviderResource> ExtractorProviderResources { get; set; }
+        public DbSet<ExtractorInfo> ExtractorInfos { get; set; }
+        public DbSet<ExtractorInfoResource> ExtractorInfoResources { get; set; }
+        public DbSet<ExtractorInfoRule> ExtractorInfoRules { get; set; }
+
         public ExtractionDbContext(DbContextOptions<ExtractionDbContext> options) 
             : base(options)
         {
