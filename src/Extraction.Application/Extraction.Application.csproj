@@ -17,6 +17,10 @@
   <ItemGroup>
     <PackageReference Include="Volo.Abp.AutoMapper" Version="4.3.0" />
     <PackageReference Include="Volo.Abp.Ddd.Application" Version="4.3.0" />
+    <PackageReference Include="Volo.Abp.Caching" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Extraction.Application.Contracts\Extraction.Application.Contracts.csproj" />
     <ProjectReference Include="..\Extraction.Domain\Extraction.Domain.csproj" />
   </ItemGroup>
