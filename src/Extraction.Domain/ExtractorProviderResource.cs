@@ -28,6 +28,11 @@ namespace Extraction
         /// </summary>
         public virtual int FileType { get; set; }
 
+        /// <summary>
+        /// 顺序
+        /// </summary>
+        public virtual int Order { get; set; }
+
         public ExtractorProviderResource()
         {
 
@@ -38,21 +43,24 @@ namespace Extraction
             Guid extractorProviderId,
             string container,
             string fileId,
-            int fileType)
+            int fileType,
+            int order)
         {
             Id = id;
             ExtractorProviderId = extractorProviderId;
             Container = container;
             FileId = fileId;
             FileType = fileType;
+            Order = order;
         }
 
-        public void Update(string container, string fileId, int fileType)
+        public void Update(string container, string fileId, int fileType, int order)
         {
             Container = container;
             FileId = fileId;
             FileType = fileType;
+            Order = order;
         }
-    
+
     }
 }

@@ -37,5 +37,43 @@ namespace Extraction
         /// <param name="includeDetails"></param>
         /// <returns></returns>
         Task<PagedResultDto<ExtractorProviderDto>> GetPagedListAsync(ExtractorProviderPagedRequestDto input, bool includeDetails = true);
+
+        /// <summary>
+        /// 创建提取管道
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        Task<Guid> CreateAsync(CreateExtractorProviderDto input);
+
+        /// <summary>
+        /// 修改提取管道
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        Task UpdateAsync(Guid id, UpdateExtractorProviderDto input);
+
+        /// <summary>
+        /// 删除提取管道
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task DeleteAsync(Guid id);
+
+        /// <summary>
+        /// 添加管道资源
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        Task<Guid> AddResourceAsync(Guid id, AddExtractorProviderResourceDto input);
+
+        /// <summary>
+        /// 删除管道资源
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="resourceId"></param>
+        /// <returns></returns>
+        Task RemoveResourceAsync(Guid id, Guid resourceId);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Volo.Abp.Domain.Entities;
 
 namespace Extraction
@@ -83,12 +84,38 @@ namespace Extraction
         }
 
         /// <summary>
+        /// 删除资源
+        /// </summary>
+        /// <param name="resourceId"></param>
+        public void RemoveResource(Guid resourceId)
+        {
+            var resource = Resources.FirstOrDefault(x => x.Id == resourceId);
+            if (resource != null)
+            {
+                Resources.Remove(resource);
+            }
+        }
+
+        /// <summary>
         /// 添加参数定义
         /// </summary>
         /// <param name="parameterDefination"></param>
         public void AddParameterDefination(ParameterDefination parameterDefination)
         {
             Definations.Add(parameterDefination);
+        }
+
+        /// <summary>
+        /// 删除参数定义
+        /// </summary>
+        /// <param name="definationId"></param>
+        public void RemoveParameterDefination(Guid definationId)
+        {
+            var parameterDefination = Definations.FirstOrDefault(x => x.Id == definationId);
+            if (parameterDefination != null)
+            {
+                Definations.Remove(parameterDefination);
+            }
         }
 
     }

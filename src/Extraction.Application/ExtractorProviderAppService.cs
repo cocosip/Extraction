@@ -8,12 +8,15 @@ namespace Extraction
 {
     public class ExtractorProviderAppService : ExtractionAppService, IExtractorProviderAppService
     {
+        protected IExtractorProviderManager ExtractorProviderManager { get; }
         protected IExtractorProviderRepository ExtractorProviderRepository { get; }
         protected IDistributedCache<ExtractorProviderDto> ExtractorProviderCache { get; }
         public ExtractorProviderAppService(
+            IExtractorProviderManager extractorProviderManager,
             IExtractorProviderRepository extractorProviderRepository,
             IDistributedCache<ExtractorProviderDto> extractorProviderCache)
         {
+            ExtractorProviderManager = extractorProviderManager;
             ExtractorProviderRepository = extractorProviderRepository;
             ExtractorProviderCache = extractorProviderCache;
         }
@@ -42,8 +45,7 @@ namespace Extraction
                 async () =>
                 {
                     return await FindByNameAsync(name, true);
-                },
-                hideErrors: false);
+                });
             return extractorProviderDto;
         }
 
@@ -83,7 +85,75 @@ namespace Extraction
               );
         }
 
-        //public virtual async Task<Guid> CreateAsync(CreateExtractorProviderDto input)
+        /// <summary>
+        /// 创建提取管道
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public virtual async Task<Guid> CreateAsync(CreateExtractorProviderDto input)
+        {
+            var provider = new ExtractorProvider(
+                GuidGenerator.Create(),
+                input.Name,
+                input.Title,
+                input.Describe);
+
+            await ExtractorProviderManager.CreateAsync(provider);
+            return provider.Id;
+        }
+
+        /// <summary>
+        /// 修改提取管道
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public virtual async Task UpdateAsync(Guid id, UpdateExtractorProviderDto input)
+        {
+            await ExtractorProviderManager.UpdateAsync(id, input.Name, input.Title, input.Describe);
+        }
+
+        /// <summary>
+        /// 删除提取管道
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public virtual async Task DeleteAsync(Guid id)
+        {
+            await ExtractorProviderRepository.DeleteAsync(id);
+        }
+
+        /// <summary>
+        /// 添加管道资源
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public virtual async Task<Guid> AddResourceAsync(Guid id, AddExtractorProviderResourceDto input)
+        {
+            var resource = new ExtractorProviderResource(
+                GuidGenerator.Create(),
+                id, input.Container,
+                input.FileId,
+                input.FileType,
+                input.Order);
+
+            await ExtractorProviderManager.AddResourceAsync(id, resource);
+            return resource.Id;
+        }
+
+        /// <summary>
+        /// 删除管道资源
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="resourceId"></param>
+        /// <returns></returns>
+        public virtual async Task RemoveResourceAsync(Guid id, Guid resourceId)
+        {
+            await ExtractorProviderManager.RemoveResourceAsync(id, resourceId);
+        }
+
+        //public virtual async Task<Guid> AddParameterDefinationAsync(Guid id)
         //{
 
         //}
