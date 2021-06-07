@@ -66,7 +66,7 @@ namespace Extraction
         /// <param name="id"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        Task<Guid> AddResourceAsync(Guid id, AddExtractorProviderResourceDto input);
+        Task<Guid> CreateResourceAsync(Guid id, CreateExtractorProviderResourceDto input);
 
         /// <summary>
         /// 删除管道资源
@@ -74,6 +74,31 @@ namespace Extraction
         /// <param name="id"></param>
         /// <param name="resourceId"></param>
         /// <returns></returns>
-        Task RemoveResourceAsync(Guid id, Guid resourceId);
+        Task DeleteResourceAsync(Guid id, Guid resourceId);
+
+        /// <summary>
+        /// 创建参数定义 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        Task<Guid> CreateParameterDefinationAsync(Guid id, CreateParameterDefinationDto input);
+
+        /// <summary>
+        /// 删除参数定义
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="parameterDefinationId"></param>
+        /// <returns></returns>
+        Task DeleteParameterDefinationAsync(Guid id, Guid parameterDefinationId);
+
+        /// <summary>
+        /// 更新参数定义
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="parameterDefinationId"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        Task UpdateParameterDefinationAsync(Guid id, Guid parameterDefinationId, UpdateParameterDefinationDto input);
     }
 }

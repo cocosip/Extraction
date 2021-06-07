@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 
@@ -22,6 +24,46 @@ namespace Extraction.EntityFrameworkCore
             return await (await GetDbSetAsync())
                 .IncludeDetails(includeDetails)
                 .FirstOrDefaultAsync(x => x.Id == id, GetCancellationToken(cancellationToken));
+        }
+
+        /// <summary>
+        /// 根据名称查询提取器信息
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="includeDetails"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<ExtractorInfo> FindByNameAsync(
+            [NotNull] string name,
+            bool includeDetails = true,
+            CancellationToken cancellationToken = default)
+        {
+            Check.NotNullOrWhiteSpace(name, nameof(name));
+            return await (await GetDbSetAsync())
+                .IncludeDetails(includeDetails)
+                .FirstOrDefaultAsync(x => x.Name == name, GetCancellationToken(cancellationToken));
+        }
+
+        /// <summary>
+        /// 根据名称查询提取器
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="expectedId"></param>
+        /// <param name="includeDetails"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<ExtractorInfo> FindExpectedByNameAsync(
+            string name,
+            Guid? expectedId = null,
+            bool includeDetails = false,
+            CancellationToken cancellationToken = default)
+        {
+            Check.NotNullOrWhiteSpace(name, nameof(name));
+            return await (await GetDbSetAsync())
+                .IncludeDetails(includeDetails)
+                .WhereIf(!name.IsNullOrWhiteSpace(), item => item.Name == name)
+                .WhereIf(expectedId.HasValue, item => item.Id != expectedId.Value)
+                .FirstOrDefaultAsync(GetCancellationToken(cancellationToken));
         }
 
         /// <summary>

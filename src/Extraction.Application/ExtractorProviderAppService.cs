@@ -129,16 +129,17 @@ namespace Extraction
         /// <param name="id"></param>
         /// <param name="input"></param>
         /// <returns></returns>
-        public virtual async Task<Guid> AddResourceAsync(Guid id, AddExtractorProviderResourceDto input)
+        public virtual async Task<Guid> CreateResourceAsync(Guid id, CreateExtractorProviderResourceDto input)
         {
             var resource = new ExtractorProviderResource(
                 GuidGenerator.Create(),
-                id, input.Container,
+                id,
+                input.Container,
                 input.FileId,
                 input.FileType,
                 input.Order);
 
-            await ExtractorProviderManager.AddResourceAsync(id, resource);
+            await ExtractorProviderManager.CreateResourceAsync(id, resource);
             return resource.Id;
         }
 
@@ -148,15 +149,60 @@ namespace Extraction
         /// <param name="id"></param>
         /// <param name="resourceId"></param>
         /// <returns></returns>
-        public virtual async Task RemoveResourceAsync(Guid id, Guid resourceId)
+        public virtual async Task DeleteResourceAsync(Guid id, Guid resourceId)
         {
-            await ExtractorProviderManager.RemoveResourceAsync(id, resourceId);
+            await ExtractorProviderManager.DeleteResourceAsync(id, resourceId);
         }
 
-        //public virtual async Task<Guid> AddParameterDefinationAsync(Guid id)
-        //{
+        /// <summary>
+        /// 创建参数定义 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public virtual async Task<Guid> CreateParameterDefinationAsync(Guid id, CreateParameterDefinationDto input)
+        {
+            var parameterDefination = new ParameterDefination(
+                GuidGenerator.Create(),
+                id,
+                input.ParentId,
+                input.Name,
+                input.ParameterType);
 
-        //}
+            await ExtractorProviderManager.CreateParameterDefinationAsync(id, parameterDefination);
+            return parameterDefination.Id;
+        }
+
+        /// <summary>
+        /// 删除参数定义
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="parameterDefinationId"></param>
+        /// <returns></returns>
+        public virtual async Task DeleteParameterDefinationAsync(Guid id, Guid parameterDefinationId)
+        {
+            await ExtractorProviderManager.DeleteParameterDefinationAsync(id, parameterDefinationId);
+        }
+
+        /// <summary>
+        /// 更新参数定义
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="parameterDefinationId"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public virtual async Task UpdateParameterDefinationAsync(
+            Guid id, 
+            Guid parameterDefinationId,
+            UpdateParameterDefinationDto input)
+        {
+            await ExtractorProviderManager.UpdateParameterDefinationAsync(
+                id,
+                parameterDefinationId,
+                input.ParentId,
+                input.Name,
+                input.ParameterType);
+        }
 
     }
 }

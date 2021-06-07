@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,6 +9,25 @@ namespace Extraction
 {
     public interface IExtractorInfoRepository : IBasicRepository<ExtractorInfo, Guid>
     {
+        /// <summary>
+        /// 根据名称查询提取器信息
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="includeDetails"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<ExtractorInfo> FindByNameAsync([NotNull] string name, bool includeDetails = true, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// 根据名称查询提取器
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="expectedId"></param>
+        /// <param name="includeDetails"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task<ExtractorInfo> FindExpectedByNameAsync(string name, Guid? expectedId = null, bool includeDetails = false, CancellationToken cancellationToken = default);
+
         /// <summary>
         /// Get list
         /// </summary>

@@ -6,7 +6,7 @@ namespace Extraction
     /// <summary>
     /// 添加管道资源
     /// </summary>
-    public class AddExtractorProviderResourceDto
+    public class CreateExtractorProviderResourceDto
     {
         /// <summary>
         /// 文件存储Container名称

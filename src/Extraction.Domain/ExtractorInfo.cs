@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Volo.Abp.Domain.Entities;
 
 namespace Extraction
@@ -81,10 +82,27 @@ namespace Extraction
             Resources.Add(resource);
         }
 
+        public void RemoveResource(Guid resourceId)
+        {
+            var resource = Resources.FirstOrDefault(x => x.Id == resourceId);
+            if (resource != null)
+            {
+                Resources.Remove(resource);
+            }
+        }
+
         public void AddRule(ExtractorInfoRule rule)
         {
             Rules.Add(rule);
         }
 
+        public void RemoveRule(Guid ruleId)
+        {
+            var rule = Rules.FirstOrDefault(x => x.Id == ruleId);
+            if (rule != null)
+            {
+                Rules.Remove(rule);
+            }
+        }
     }
 }

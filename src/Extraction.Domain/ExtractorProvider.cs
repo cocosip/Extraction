@@ -108,10 +108,10 @@ namespace Extraction
         /// <summary>
         /// 删除参数定义
         /// </summary>
-        /// <param name="definationId"></param>
-        public void RemoveParameterDefination(Guid definationId)
+        /// <param name="parameterDefinationId"></param>
+        public void RemoveParameterDefination(Guid parameterDefinationId)
         {
-            var parameterDefination = Definations.FirstOrDefault(x => x.Id == definationId);
+            var parameterDefination = Definations.FirstOrDefault(x => x.Id == parameterDefinationId);
             if (parameterDefination != null)
             {
                 Definations.Remove(parameterDefination);

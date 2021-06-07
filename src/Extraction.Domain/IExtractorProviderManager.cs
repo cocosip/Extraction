@@ -29,7 +29,7 @@ namespace Extraction
         /// <param name="id"></param>
         /// <param name="resource"></param>
         /// <returns></returns>
-        Task AddResourceAsync(Guid id, ExtractorProviderResource resource);
+        Task CreateResourceAsync(Guid id, ExtractorProviderResource resource);
 
         /// <summary>
         /// 删除资源
@@ -37,6 +37,33 @@ namespace Extraction
         /// <param name="id"></param>
         /// <param name="resourceId"></param>
         /// <returns></returns>
-        Task RemoveResourceAsync(Guid id, Guid resourceId);
+        Task DeleteResourceAsync(Guid id, Guid resourceId);
+
+        /// <summary>
+        /// 添加参数定义
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="parameterDefination"></param>
+        /// <returns></returns>
+        Task CreateParameterDefinationAsync(Guid id, ParameterDefination parameterDefination);
+
+        /// <summary>
+        /// 删除参数定义
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="parameterDefinationId"></param>
+        /// <returns></returns>
+        Task DeleteParameterDefinationAsync(Guid id, Guid parameterDefinationId);
+
+        /// <summary>
+        /// 更新参数定义
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="parameterDefinationId"></param>
+        /// <param name="parentId"></param>
+        /// <param name="name"></param>
+        /// <param name="parameterType"></param>
+        /// <returns></returns>
+        Task UpdateParameterDefinationAsync(Guid id, Guid parameterDefinationId, Guid? parentId, string name, int parameterType);
     }
 }

@@ -74,9 +74,11 @@ namespace Extraction.EntityFrameworkCore
                 b.ConfigureByConvention();
 
                 b.Property(p => p.ExtractorProviderId).IsRequired();
+                b.Property(p => p.ParentId).IsRequired(false);
                 b.Property(p => p.Name).IsRequired().HasMaxLength(ParameterDefinationConsts.MaxNameLength);
                 b.Property(p => p.ParameterType).IsRequired();
 
+                b.HasMany(p => p.Childrens).WithOne().HasForeignKey(p => p.ParentId);
                 b.HasIndex(p => p.Name);
             });
 
