@@ -29,11 +29,11 @@ namespace Extraction
         /// <summary>
         /// 下级参数
         /// </summary>
-        public virtual ICollection<ParameterDefination> Childrens { get; protected set; }
+        public virtual ICollection<ParameterDefination> Children { get; protected set; }
 
         public ParameterDefination()
         {
-            Childrens = new List<ParameterDefination>();
+            Children = new List<ParameterDefination>();
         }
 
         public ParameterDefination(Guid id, Guid extractorProviderId, Guid? parentId, string name, int parameterType)

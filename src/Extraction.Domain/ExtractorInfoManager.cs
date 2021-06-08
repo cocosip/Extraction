@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
@@ -29,10 +30,10 @@ namespace Extraction
         /// <returns></returns>
         public virtual async Task CreateAsync(ExtractorInfo extractorInfo)
         {
-            var provider = await ExtractorInfoRepository.FindAsync(extractorInfo.ExtractorProviderId, false);
+            var provider = await ExtractorProviderRepository.FindByNameAsync(extractorInfo.ProviderName, false);
             if (provider == null)
             {
-                throw new UserFriendlyException($"Could not find provider by id '{extractorInfo.ExtractorProviderId}'.");
+                throw new UserFriendlyException($"Could not find provider by name '{provider.Name}'.");
             }
 
             var queryExtractorInfo = await ExtractorInfoRepository.FindExpectedByNameAsync(extractorInfo.Name);
@@ -49,11 +50,12 @@ namespace Extraction
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
+        /// <param name="match"></param>
         /// <param name="domain"></param>
         /// <param name="url"></param>
         /// <param name="describe"></param>
         /// <returns></returns>
-        public virtual async Task UpdateAsync(Guid id, string name, string domain, string url, string describe)
+        public virtual async Task UpdateAsync(Guid id, string name, string match, string domain, string url, string describe)
         {
             var extractorInfo = await ExtractorInfoRepository.GetAsync(id);
             var queryExtractorInfo = await ExtractorInfoRepository.FindExpectedByNameAsync(name, id);
@@ -62,7 +64,14 @@ namespace Extraction
                 throw new UserFriendlyException($"Duplicate extractorInfo '{name}'.");
             }
 
-            extractorInfo.Update(name, domain, url, describe);
+            var provider = await ExtractorProviderRepository.FindByNameAsync(extractorInfo.Name, false);
+            if (provider == null)
+            {
+                throw new UserFriendlyException($"Could not find provider by name '{provider.Name}'.");
+            }
+
+            extractorInfo.Update(name, match, domain, url, describe);
+
             await ExtractorInfoRepository.UpdateAsync(extractorInfo);
         }
 
@@ -130,12 +139,56 @@ namespace Extraction
             await ExtractorInfoRepository.UpdateAsync(extractorInfo);
         }
 
-        public virtual async Task UpdateRuleAsync(Guid id, Guid ruleId)
+        /// <summary>
+        /// 更新提取器规则
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="ruleId"></param>
+        /// <param name="rootDefinationId"></param>
+        /// <param name="currentDefinationId"></param>
+        /// <param name="extractStyle"></param>
+        /// <param name="handleStyle"></param>
+        /// <param name="dataType"></param>
+        /// <param name="ruleValue"></param>
+        /// <param name="describe"></param>
+        /// <returns></returns>
+        public virtual async Task UpdateRuleAsync(Guid id,
+            Guid ruleId,
+            Guid rootDefinationId,
+            Guid currentDefinationId,
+            int extractStyle,
+            int handleStyle,
+            int dataType,
+            string ruleValue,
+            string describe)
         {
+            var extractorInfo = await ExtractorInfoRepository.GetAsync(id, true);
+            var rule = extractorInfo.Rules.FirstOrDefault(x => x.Id == ruleId);
+            if (rule == null)
+            {
+                throw new UserFriendlyException($"Could not find extractorInfo {id}’s rule by id '{ruleId}'");
+            }
+            await ValidateParameterDefinationAsync(rootDefinationId, currentDefinationId);
 
+            rule.Update(
+                rootDefinationId,
+                currentDefinationId,
+                extractStyle,
+                handleStyle,
+                dataType,
+                ruleValue,
+                describe);
+
+            await ExtractorInfoRepository.UpdateAsync(extractorInfo);
         }
 
 
+        /// <summary>
+        /// 校验提取器规则关联的参数
+        /// </summary>
+        /// <param name="rootDefinationId"></param>
+        /// <param name="currentDefinationId"></param>
+        /// <returns></returns>
         protected virtual async Task ValidateParameterDefinationAsync(Guid rootDefinationId, Guid currentDefinationId)
         {
             var rootParameterDefination = await ParameterDefinationRepository.FindAsync(rootDefinationId, false);

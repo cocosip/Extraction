@@ -34,19 +34,31 @@ namespace Extraction
         }
 
         /// <summary>
-        /// 从缓存中获取配置信息
+        /// 从缓存中获取提取器管道信息
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="includeDetails"></param>
         /// <returns></returns>
-        public virtual async Task<ExtractorProviderDto> FindByNameFromCacheAsync(string name)
+        public virtual async Task<ExtractorProviderDto> FindByNameFromCacheAsync(string name, bool includeDetails = true)
         {
             var extractorProviderDto = await ExtractorProviderCache.GetOrAddAsync(
                 name,
                 async () =>
                 {
-                    return await FindByNameAsync(name, true);
+                    return await FindByNameAsync(name, includeDetails);
                 });
             return extractorProviderDto;
+        }
+
+        /// <summary>
+        /// 获取全部的提取器管道
+        /// </summary>
+        /// <param name="includeDetails"></param>
+        /// <returns></returns>
+        public virtual async Task<List<ExtractorProviderDto>> GetAllAsync(bool includeDetails = false)
+        {
+            var extractorProviders = await ExtractorProviderRepository.GetAllAsync(includeDetails);
+            return ObjectMapper.Map<List<ExtractorProvider>, List<ExtractorProviderDto>>(extractorProviders);
         }
 
         /// <summary>
@@ -192,7 +204,7 @@ namespace Extraction
         /// <param name="input"></param>
         /// <returns></returns>
         public virtual async Task UpdateParameterDefinationAsync(
-            Guid id, 
+            Guid id,
             Guid parameterDefinationId,
             UpdateParameterDefinationDto input)
         {

@@ -3,12 +3,12 @@ using Volo.Abp.Application.Dtos;
 
 namespace Extraction
 {
-    public class ExtractorProviderResourceDto : EntityDto<Guid>
+    public class ExtractorInfoResourceDto : EntityDto<Guid>
     {
         /// <summary>
-        /// 提取器管道Id
+        /// 提取器的Id
         /// </summary>
-        public Guid ExtractorProviderId { get; set; }
+        public Guid ExtractorInfoId { get; set; }
 
         /// <summary>
         /// 文件存储Container名称
@@ -26,7 +26,12 @@ namespace Extraction
         public int FileType { get; set; }
 
         /// <summary>
-        /// Url访问地址
+        /// 顺序
+        /// </summary>
+        public int Order { get; set; }
+
+        /// <summary>
+        /// 访问地址
         /// </summary>
         public string Url { get; set; }
     }

@@ -11,14 +11,19 @@ namespace Extraction
     public class ExtractorInfo : AggregateRoot<Guid>
     {
         /// <summary>
-        /// 提取器管道Id
+        /// 管道的名称
         /// </summary>
-        public virtual Guid ExtractorProviderId { get; set; }
+        public virtual string ProviderName { get; set; }
 
         /// <summary>
         /// 提取器的名称
         /// </summary>
         public virtual string Name { get; set; }
+
+        /// <summary>
+        /// 匹配的正则表达式
+        /// </summary>
+        public virtual string Match { get; set; }
 
         /// <summary>
         /// 域名地址
@@ -54,28 +59,30 @@ namespace Extraction
 
         public ExtractorInfo(
             Guid id,
-            Guid extractorProviderId,
+            string providerName,
             string name,
+            string match,
             string domain,
             string url,
             string describe) : this()
         {
             Id = id;
-            ExtractorProviderId = extractorProviderId;
+            ProviderName = providerName;
             Name = name;
+            Match = match;
             Domain = domain;
             Url = url;
             Describe = describe;
         }
 
-        public void Update(string name, string domain, string url, string describe)
+        public void Update(string name, string match, string domain, string url, string describe)
         {
             Name = name;
+            Match = match;
             Domain = domain;
             Url = url;
             Describe = describe;
         }
-
 
         public void AddResource(ExtractorInfoResource resource)
         {

@@ -78,7 +78,7 @@ namespace Extraction.EntityFrameworkCore
                 b.Property(p => p.Name).IsRequired().HasMaxLength(ParameterDefinationConsts.MaxNameLength);
                 b.Property(p => p.ParameterType).IsRequired();
 
-                b.HasMany(p => p.Childrens).WithOne().HasForeignKey(p => p.ParentId);
+                b.HasMany(p => p.Children).WithOne().HasForeignKey(p => p.ParentId);
                 b.HasIndex(p => p.Name);
             });
 
@@ -88,8 +88,9 @@ namespace Extraction.EntityFrameworkCore
                 b.ToTable(options.TablePrefix + "ExtractorInfos", options.Schema);
                 b.ConfigureByConvention();
 
-                b.Property(p => p.ExtractorProviderId).IsRequired();
+                b.Property(p => p.ProviderName).IsRequired().HasMaxLength(ExtractorInfoConsts.MaxProviderNameLength);
                 b.Property(p => p.Name).IsRequired().HasMaxLength(ExtractorInfoConsts.MaxNameLength);
+                b.Property(p => p.Match).IsRequired().HasMaxLength(ExtractorInfoConsts.MaxMatchLength);
                 b.Property(p => p.Domain).IsRequired().HasMaxLength(ExtractorInfoConsts.MaxDomainLength);
                 b.Property(p => p.Url).IsRequired().HasMaxLength(ExtractorInfoConsts.MaxUrlLength);
                 b.Property(p => p.Describe).HasMaxLength(ExtractorInfoConsts.MaxDescribeLength);

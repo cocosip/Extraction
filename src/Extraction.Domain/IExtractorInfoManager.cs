@@ -18,11 +18,12 @@ namespace Extraction
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
+        /// <param name="match"></param>
         /// <param name="domain"></param>
         /// <param name="url"></param>
         /// <param name="describe"></param>
         /// <returns></returns>
-        Task UpdateAsync(Guid id, string name, string domain, string url, string describe);
+        Task UpdateAsync(Guid id, string name, string match, string domain, string url, string describe);
 
         /// <summary>
         /// 创建提取器资源
@@ -47,6 +48,21 @@ namespace Extraction
         /// <param name="rule"></param>
         /// <returns></returns>
         Task CreateRuleAsync(Guid id, ExtractorInfoRule rule);
+
+        /// <summary>
+        /// 更新提取器规则
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="ruleId"></param>
+        /// <param name="rootDefinationId"></param>
+        /// <param name="currentDefinationId"></param>
+        /// <param name="extractStyle"></param>
+        /// <param name="handleStyle"></param>
+        /// <param name="dataType"></param>
+        /// <param name="ruleValue"></param>
+        /// <param name="describe"></param>
+        /// <returns></returns>
+        Task UpdateRuleAsync(Guid id, Guid ruleId, Guid rootDefinationId, Guid currentDefinationId, int extractStyle, int handleStyle, int dataType, string ruleValue, string describe);
 
         /// <summary>
         /// 删除提取规则

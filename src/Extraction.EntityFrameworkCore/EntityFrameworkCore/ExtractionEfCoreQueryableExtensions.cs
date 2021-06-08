@@ -41,7 +41,7 @@ namespace Extraction.EntityFrameworkCore
                 return queryable;
             }
             return queryable
-                .Include(x => x.Childrens);
+                .Include(x => x.Children);
         }
     }
 }

@@ -11,9 +11,14 @@ namespace Extraction
              * into multiple profile classes for a better organization. */
 
             CreateMap<ExtractorProvider, ExtractorProviderDto>();
-            CreateMap<ExtractorProviderResource, ExtractorProviderResourceDto>();
+            CreateMap<ExtractorProviderResource, ExtractorProviderResourceDto>()
+                .ForMember(dest => dest.Url, s => s.Ignore());
             CreateMap<ParameterDefination, ParameterDefinationDto>();
 
+            CreateMap<ExtractorInfo, ExtractorInfoDto>();
+            CreateMap<ExtractorInfoResource, ExtractorInfoResourceDto>()
+                .ForMember(dest => dest.Url, s => s.Ignore());
+            CreateMap<ExtractorInfoRule, ExtractorInfoRuleDto>();
 
         }
     }

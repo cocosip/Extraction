@@ -76,7 +76,6 @@ namespace Extraction
         }
 
         public void Update(
-            Guid extractorInfoId,
             Guid rootDefinationId,
             Guid currentDefinationId,
             int extractStyle,
@@ -85,7 +84,6 @@ namespace Extraction
             string ruleValue,
             string describe)
         {
-            ExtractorInfoId = extractorInfoId;
             RootDefinationId = rootDefinationId;
             CurrentDefinationId = currentDefinationId;
             ExtractStyle = extractStyle;

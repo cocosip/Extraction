@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -16,11 +17,19 @@ namespace Extraction
         Task<ExtractorProviderDto> FindByNameAsync(string name, bool includeDetails = true);
 
         /// <summary>
-        /// 从缓存中获取配置信息
+        /// 从缓存中获取提取器管道信息
         /// </summary>
         /// <param name="name"></param>
+        /// <param name="includeDetails"></param>
         /// <returns></returns>
-        Task<ExtractorProviderDto> FindByNameFromCacheAsync(string name);
+        Task<ExtractorProviderDto> FindByNameFromCacheAsync(string name, bool includeDetails = true);
+
+        /// <summary>
+        /// 获取全部的提取器管道
+        /// </summary>
+        /// <param name="includeDetails"></param>
+        /// <returns></returns>
+        Task<List<ExtractorProviderDto>> GetAllAsync(bool includeDetails = false);
 
         /// <summary>
         /// 根据Id查询配置

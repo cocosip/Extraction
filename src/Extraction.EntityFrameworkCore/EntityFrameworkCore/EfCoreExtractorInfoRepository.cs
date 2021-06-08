@@ -67,13 +67,31 @@ namespace Extraction.EntityFrameworkCore
         }
 
         /// <summary>
+        /// 获取全部的管道信息
+        /// </summary>
+        /// <param name="providerName"></param>
+        /// <param name="includeDetails"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual async Task<List<ExtractorInfo>> GetAllAsync(
+            string providerName = "",
+            bool includeDetails = false,
+            CancellationToken cancellationToken = default)
+        {
+            return await (await GetDbSetAsync())
+                .IncludeDetails(includeDetails)
+                .WhereIf(!providerName.IsNullOrWhiteSpace(), item => item.ProviderName == providerName)
+                .ToListAsync(GetCancellationToken(cancellationToken));
+        }
+
+        /// <summary>
         /// Get list
         /// </summary>
         /// <param name="skipCount"></param>
         /// <param name="maxResultCount"></param>
         /// <param name="sorting"></param>
         /// <param name="includeDetails"></param>
-        /// <param name="extractorProviderId"></param>
+        /// <param name="providerName"></param>
         /// <param name="name"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -82,13 +100,13 @@ namespace Extraction.EntityFrameworkCore
             int maxResultCount,
             string sorting = null,
             bool includeDetails = true,
-            Guid? extractorProviderId = null,
+            string providerName = "",
             string name = "",
             CancellationToken cancellationToken = default)
         {
             return await (await GetDbSetAsync())
                 .IncludeDetails(includeDetails)
-                .WhereIf(extractorProviderId.HasValue, item => item.ExtractorProviderId == extractorProviderId.Value)
+                .WhereIf(!providerName.IsNullOrWhiteSpace(), item => item.ProviderName == providerName)
                 .WhereIf(!name.IsNullOrWhiteSpace(), item => item.Name.Contains(name))
                 .OrderBy(sorting ?? nameof(ExtractorProvider.Name))
                 .Skip(skipCount)
@@ -99,17 +117,17 @@ namespace Extraction.EntityFrameworkCore
         /// <summary>
         /// Get count
         /// </summary>
-        /// <param name="extractorProviderId"></param>
+        /// <param name="providerName"></param>
         /// <param name="name"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<int> GetCountAsync(
-            Guid? extractorProviderId = null,
+            string providerName = "",
             string name = "",
             CancellationToken cancellationToken = default)
         {
             return await (await GetDbSetAsync())
-                .WhereIf(extractorProviderId.HasValue, item => item.ExtractorProviderId == extractorProviderId.Value)
+                .WhereIf(!providerName.IsNullOrWhiteSpace(), item => item.ProviderName == providerName)
                 .WhereIf(!name.IsNullOrWhiteSpace(), item => item.Name == name)
                 .CountAsync(GetCancellationToken(cancellationToken));
         }
