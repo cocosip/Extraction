@@ -16,13 +16,13 @@ namespace Extraction
         /// <returns></returns>
         Task<ExtractorProviderDto> FindByNameAsync(string name, bool includeDetails = true);
 
-        /// <summary>
-        /// 从缓存中获取提取器管道信息
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="includeDetails"></param>
-        /// <returns></returns>
-        Task<ExtractorProviderDto> FindByNameFromCacheAsync(string name, bool includeDetails = true);
+        ///// <summary>
+        ///// 从缓存中获取提取器管道信息
+        ///// </summary>
+        ///// <param name="name"></param>
+        ///// <param name="includeDetails"></param>
+        ///// <returns></returns>
+        //Task<ExtractorProviderDto> FindByNameFromCacheAsync(string name, bool includeDetails = true);
 
         /// <summary>
         /// 获取全部的提取器管道

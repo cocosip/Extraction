@@ -17,6 +17,11 @@ namespace Extraction
         public string Name { get; set; }
 
         /// <summary>
+        /// 匹配的正则表达式
+        /// </summary>
+        public string Match { get; set; }
+
+        /// <summary>
         /// 域名地址
         /// </summary>
         public string Domain { get; set; }

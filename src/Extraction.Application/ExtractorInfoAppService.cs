@@ -33,31 +33,22 @@ namespace Extraction
             return ObjectMapper.Map<ExtractorInfo, ExtractorInfoDto>(extractorInfo);
         }
 
-        /// <summary>
-        /// 根据名称从缓存中获取提取器信息
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="includeDetails"></param>
-        /// <returns></returns>
-        public virtual async Task<ExtractorInfoDto> FindByNameFromCacheAsync(string name, bool includeDetails = true)
-        {
-            var extractorInfoDto = await ExtractorInfoCache.GetOrAddAsync(
-             name,
-             async () =>
-             {
-                 return await FindByNameAsync(name, includeDetails);
-             });
-            return extractorInfoDto;
-        }
-
-        //public virtual async Task<ExtractorInfoDto> GetMatchAsync(string url)
+        ///// <summary>
+        ///// 根据名称从缓存中获取提取器信息
+        ///// </summary>
+        ///// <param name="name"></param>
+        ///// <param name="includeDetails"></param>
+        ///// <returns></returns>
+        //public virtual async Task<ExtractorInfoDto> FindByNameFromCacheAsync(string name, bool includeDetails = true)
         //{
-        //    //根据url匹配对应的提取器
-        //    var extractorInfos=await ExtractorInfoRepository.GetListAsync(false,)
-
-
+        //    var extractorInfoDto = await ExtractorInfoCache.GetOrAddAsync(
+        //     name,
+        //     async () =>
+        //     {
+        //         return await FindByNameAsync(name, includeDetails);
+        //     });
+        //    return extractorInfoDto;
         //}
-
 
         /// <summary>
         /// 根据Id获取提取器信息
@@ -166,6 +157,61 @@ namespace Extraction
         public virtual async Task DeleteResourceAsync(Guid id, Guid resourceId)
         {
             await ExtractorInfoManager.DeleteResourceAsync(id, resourceId);
+        }
+
+        /// <summary>
+        /// 创建提取器规则
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public virtual async Task<Guid> CreateRuleAsync(Guid id, CreateExtractorInfoRuleDto input)
+        {
+            var extractorInfoRule = new ExtractorInfoRule(
+                id,
+                Guid.NewGuid(),
+                input.RootDefinationId,
+                input.CurrentDefinationId,
+                input.ExtractStyle,
+                input.HandleStyle,
+                input.DataType,
+                input.RuleValue,
+                input.Describe);
+
+            await ExtractorInfoManager.CreateRuleAsync(id, extractorInfoRule);
+            return extractorInfoRule.Id;
+        }
+
+        /// <summary>
+        /// 更新提取器规则
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="ruleId"></param>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public virtual async Task UpdateRuleAsync(Guid id, Guid ruleId, UpdateExtractorInfoRuleDto input)
+        {
+            await ExtractorInfoManager.UpdateRuleAsync(
+                id,
+                ruleId,
+                input.RootDefinationId,
+                input.CurrentDefinationId,
+                input.ExtractStyle,
+                input.HandleStyle,
+                input.DataType,
+                input.RuleValue,
+                input.Describe);
+        }
+
+        /// <summary>
+        /// 删除提取器规则
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="ruleId"></param>
+        /// <returns></returns>
+        public virtual async Task DeleteRuleAsync(Guid id, Guid ruleId)
+        {
+            await ExtractorInfoManager.DeleteRuleAsync(id, ruleId);
         }
 
     }

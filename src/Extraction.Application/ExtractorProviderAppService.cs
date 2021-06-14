@@ -33,22 +33,22 @@ namespace Extraction
             return ObjectMapper.Map<ExtractorProvider, ExtractorProviderDto>(extractorProvider);
         }
 
-        /// <summary>
-        /// 从缓存中获取提取器管道信息
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="includeDetails"></param>
-        /// <returns></returns>
-        public virtual async Task<ExtractorProviderDto> FindByNameFromCacheAsync(string name, bool includeDetails = true)
-        {
-            var extractorProviderDto = await ExtractorProviderCache.GetOrAddAsync(
-                name,
-                async () =>
-                {
-                    return await FindByNameAsync(name, includeDetails);
-                });
-            return extractorProviderDto;
-        }
+        ///// <summary>
+        ///// 从缓存中获取提取器管道信息
+        ///// </summary>
+        ///// <param name="name"></param>
+        ///// <param name="includeDetails"></param>
+        ///// <returns></returns>
+        //public virtual async Task<ExtractorProviderDto> FindByNameFromCacheAsync(string name, bool includeDetails = true)
+        //{
+        //    var extractorProviderDto = await ExtractorProviderCache.GetOrAddAsync(
+        //        name,
+        //        async () =>
+        //        {
+        //            return await FindByNameAsync(name, includeDetails);
+        //        });
+        //    return extractorProviderDto;
+        //}
 
         /// <summary>
         /// 获取全部的提取器管道
