@@ -24,5 +24,10 @@ namespace Extraction
         [Required]
         public int ParameterType { get; set; }
 
+        /// <summary>
+        /// 参数使用方式
+        /// </summary>
+        [Required]
+        public int ParameterUseStyle { get; set; }
     }
 }

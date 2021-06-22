@@ -27,6 +27,11 @@ namespace Extraction
         public virtual int ParameterType { get; set; }
 
         /// <summary>
+        /// 使用方式
+        /// </summary>
+        public virtual int ParameterUseStyle { get; set; }
+
+        /// <summary>
         /// 下级参数
         /// </summary>
         public virtual ICollection<ParameterDefination> Children { get; protected set; }
@@ -36,20 +41,22 @@ namespace Extraction
             Children = new List<ParameterDefination>();
         }
 
-        public ParameterDefination(Guid id, Guid extractorProviderId, Guid? parentId, string name, int parameterType)
+        public ParameterDefination(Guid id, Guid extractorProviderId, Guid? parentId, string name, int parameterType, int parameterUseStyle)
         {
             Id = id;
             ExtractorProviderId = extractorProviderId;
             ParentId = parentId;
             Name = name;
             ParameterType = parameterType;
+            ParameterUseStyle = parameterUseStyle;
         }
 
-        public void Update(Guid? parentId, string name, int parameterType)
+        public void Update(Guid? parentId, string name, int parameterType, int parameterUseStyle)
         {
             ParentId = parentId;
             Name = name;
             ParameterType = parameterType;
+            ParameterUseStyle = parameterUseStyle;
         }
     }
 }

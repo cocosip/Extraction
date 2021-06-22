@@ -63,7 +63,8 @@ namespace Extraction
         /// <param name="parentId"></param>
         /// <param name="name"></param>
         /// <param name="parameterType"></param>
+        /// <param name="parameterUseStyle"></param>
         /// <returns></returns>
-        Task UpdateParameterDefinationAsync(Guid id, Guid parameterDefinationId, Guid? parentId, string name, int parameterType);
+        Task UpdateParameterDefinationAsync(Guid id, Guid parameterDefinationId, Guid? parentId, string name, int parameterType,int parameterUseStyle);
     }
 }

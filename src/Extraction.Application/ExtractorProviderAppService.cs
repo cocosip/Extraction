@@ -179,7 +179,8 @@ namespace Extraction
                 id,
                 input.ParentId,
                 input.Name,
-                input.ParameterType);
+                input.ParameterType,
+                input.ParameterUseStyle);
 
             await ExtractorProviderManager.CreateParameterDefinationAsync(id, parameterDefination);
             return parameterDefination.Id;
@@ -213,7 +214,8 @@ namespace Extraction
                 parameterDefinationId,
                 input.ParentId,
                 input.Name,
-                input.ParameterType);
+                input.ParameterType,
+                input.ParameterUseStyle);
         }
 
     }

@@ -120,13 +120,15 @@ namespace Extraction
         /// <param name="parentId"></param>
         /// <param name="name"></param>
         /// <param name="parameterType"></param>
+        /// <param name="parameterUseStyle"></param>
         /// <returns></returns>
         public virtual async Task UpdateParameterDefinationAsync(
             Guid id, 
             Guid parameterDefinationId,
             Guid? parentId,
             string name,
-            int parameterType)
+            int parameterType,
+            int parameterUseStyle)
         {
             var provider = await ExtractorProviderRepository.GetAsync(id, true);
             var parameterDefination = provider.Definations.FirstOrDefault(x => x.Id == parameterDefinationId);
@@ -134,7 +136,7 @@ namespace Extraction
             {
                 throw new UserFriendlyException($"Could not find parameterDefination '{parameterDefinationId}'.");
             }
-            parameterDefination.Update(parentId, name, parameterType);
+            parameterDefination.Update(parentId, name, parameterType, parameterUseStyle);
 
             await ExtractorProviderRepository.UpdateAsync(provider);
         }

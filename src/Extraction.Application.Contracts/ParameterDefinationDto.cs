@@ -24,6 +24,11 @@ namespace Extraction
         public int ParameterType { get; set; }
 
         /// <summary>
+        /// 参数使用方式
+        /// </summary>
+        public int ParameterUseStyle { get; set; }
+
+        /// <summary>
         /// 下级参数
         /// </summary>
         public List<ParameterDefinationDto> Childrens { get; set; }

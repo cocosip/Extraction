@@ -18,6 +18,8 @@ namespace Extraction.EntityFrameworkCore
                  * options.AddRepository<Question, EfCoreQuestionRepository>();
                  */
                 options.AddDefaultRepositories(true);
+                options.AddRepository<ExtractorProvider, EfCoreExtractorProviderRepository>();
+                options.AddRepository<ExtractorInfo, EfCoreExtractorInfoRepository>();
             });
         }
     }
