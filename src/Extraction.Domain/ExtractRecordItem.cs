@@ -5,14 +5,14 @@ using Volo.Abp.Domain.Entities;
 namespace Extraction
 {
     /// <summary>
-    /// 提取结果项
+    /// 提取记录项
     /// </summary>
-    public class ExtractResultItem : Entity<Guid>
+    public class ExtractRecordItem : Entity<Guid>
     {
         /// <summary>
         /// 提取结果Id
         /// </summary>
-        public virtual Guid ExtractResultId { get; set; }
+        public virtual Guid ExtractRecordId { get; set; }
 
         /// <summary>
         /// 参数Id
@@ -29,22 +29,20 @@ namespace Extraction
         /// </summary>
         public virtual string Value { get; set; }
 
-        public virtual ICollection<ExtractResultItem> Children { get; protected set; }
+        public virtual ICollection<ExtractRecordItem> Children { get; protected set; }
 
-        public ExtractResultItem()
+        public ExtractRecordItem()
         {
-            Children = new List<ExtractResultItem>();
+            Children = new List<ExtractRecordItem>();
         }
 
-        public ExtractResultItem(Guid id, Guid extractResultId, Guid parameterDefinationId, int parameterType, string value) : this()
+        public ExtractRecordItem(Guid id, Guid extractRecordId, Guid parameterDefinationId, int parameterType, string value) : this()
         {
             Id = id;
-            ExtractResultId = extractResultId;
+            ExtractRecordId = extractRecordId;
             ParameterDefinationId = parameterDefinationId;
             ParameterType = parameterType;
             Value = value;
         }
-
-
     }
 }
