@@ -54,15 +54,16 @@ namespace Extraction
         /// </summary>
         /// <param name="id"></param>
         /// <param name="ruleId"></param>
-        /// <param name="rootDefinationId"></param>
-        /// <param name="currentDefinationId"></param>
-        /// <param name="extractStyle"></param>
+        /// <param name="parameterDefinationId"></param>
+        /// <param name="selectNodeType"></param>
+        /// <param name="nodeManipulationType"></param>
         /// <param name="handleStyle"></param>
-        /// <param name="dataType"></param>
-        /// <param name="ruleValue"></param>
+        /// <param name="xPathValue"></param>
+        /// <param name="preHandlers"></param>
+        /// <param name="afterHandlers"></param>
         /// <param name="describe"></param>
         /// <returns></returns>
-        Task UpdateRuleAsync(Guid id, Guid ruleId, Guid rootDefinationId, Guid currentDefinationId, int extractStyle, int handleStyle, int dataType, string ruleValue, string describe);
+        Task UpdateRuleAsync(Guid id, Guid ruleId, Guid parameterDefinationId, int selectNodeType, int nodeManipulationType, int handleStyle, string xPathValue, string preHandlers, string afterHandlers, string describe);
 
         /// <summary>
         /// 删除提取规则

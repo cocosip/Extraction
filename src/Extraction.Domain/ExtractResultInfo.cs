@@ -5,7 +5,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 namespace Extraction
 {
     /// <summary>
-    /// 提取结果信息
+    /// 提取结果信息(临时,可清除)
     /// </summary>
     public class ExtractResultInfo : AuditedAggregateRoot<Guid>
     {

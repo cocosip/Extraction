@@ -119,12 +119,13 @@ namespace Extraction.EntityFrameworkCore
                 b.ConfigureByConvention();
 
                 b.Property(p => p.ExtractorInfoId).IsRequired();
-                b.Property(p => p.RootDefinationId).IsRequired();
-                b.Property(p => p.CurrentDefinationId).IsRequired();
-                b.Property(p => p.ExtractStyle).IsRequired();
+                b.Property(p => p.ParameterDefinationId).IsRequired();
+                b.Property(p => p.SelectNodeType).IsRequired();
+                b.Property(p => p.NodeManipulationType).IsRequired();
                 b.Property(p => p.HandleStyle).IsRequired();
-                b.Property(p => p.DataType).IsRequired();
-                b.Property(p => p.RuleValue).HasMaxLength(ExtractorInfoRuleConsts.MaxRuleValueLength);
+                b.Property(p => p.XPathValue).IsRequired().HasMaxLength(ExtractorInfoRuleConsts.MaxXPathValueLength);
+                b.Property(p => p.PreHandlers).HasMaxLength(ExtractorInfoRuleConsts.MaxPreHandlersLength);
+                b.Property(p => p.PreHandlers).HasMaxLength(ExtractorInfoRuleConsts.MaxAfterHandlersLength);
                 b.Property(p => p.Describe).HasMaxLength(ExtractorInfoRuleConsts.MaxDescribeLength);
             });
 

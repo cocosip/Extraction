@@ -1,18 +1,18 @@
 ﻿namespace Extraction
 {
     /// <summary>
-    /// 数据类型
+    /// XPath SelectNode 类型
     /// </summary>
-    public enum DataType
+    public enum SelectNodeType
     {
         /// <summary>
-        /// 字符串类型
+        ///单个Node 
         /// </summary>
-        String = 1,
+        SingleNode = 1,
 
         /// <summary>
-        /// Base64类型图片
+        /// 多个Nodes
         /// </summary>
-        Base64Pic = 2
+        SelectNodes = 2
     }
 }

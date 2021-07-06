@@ -170,12 +170,13 @@ namespace Extraction
             var extractorInfoRule = new ExtractorInfoRule(
                 id,
                 Guid.NewGuid(),
-                input.RootDefinationId,
-                input.CurrentDefinationId,
-                input.ExtractStyle,
+                input.ParameterDefinationId,
+                input.SelectNodeType,
+                input.NodeManipulationType,
                 input.HandleStyle,
-                input.DataType,
-                input.RuleValue,
+                input.XPathValue,
+                input.PreHandlers,
+                input.AfterHandlers,
                 input.Describe);
 
             await ExtractorInfoManager.CreateRuleAsync(id, extractorInfoRule);
@@ -194,12 +195,13 @@ namespace Extraction
             await ExtractorInfoManager.UpdateRuleAsync(
                 id,
                 ruleId,
-                input.RootDefinationId,
-                input.CurrentDefinationId,
-                input.ExtractStyle,
+                input.ParameterDefinationId,
+                input.SelectNodeType,
+                input.NodeManipulationType,
                 input.HandleStyle,
-                input.DataType,
-                input.RuleValue,
+                input.XPathValue,
+                input.PreHandlers,
+                input.AfterHandlers,
                 input.Describe);
         }
 

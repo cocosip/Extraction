@@ -10,41 +10,47 @@ namespace Extraction
     public class UpdateExtractorInfoRuleDto
     {
         /// <summary>
-        /// 根级参数定义Id
+        /// 参数定义Id
         /// </summary>
         [Required]
-        public Guid RootDefinationId { get; set; }
+        public Guid ParameterDefinationId { get; set; }
 
         /// <summary>
-        /// 当前的参数定义Id
+        /// XPath SelectNodeType
         /// </summary>
         [Required]
-        public Guid CurrentDefinationId { get; set; }
+        public int SelectNodeType { get; set; }
 
         /// <summary>
-        /// 提取方式,常量或者是XPath提取
+        /// XPath 提取到的Node的处理
         /// </summary>
         [Required]
-        public int ExtractStyle { get; set; }
+        public int NodeManipulationType { get; set; }
 
         /// <summary>
-        /// 数据处理方式,1-默认,2-OCR识别
+        /// OCR的特定处理设置
         /// </summary>
         [Required]
         public int HandleStyle { get; set; }
 
         /// <summary>
-        /// 数据类型,1-String(字符串类型),2-Base64图片
+        /// XPath提取的值
         /// </summary>
         [Required]
-        public int DataType { get; set; }
+        [DynamicStringLength(typeof(ExtractorInfoRuleConsts), nameof(ExtractorInfoRuleConsts.MaxXPathValueLength))]
+        public string XPathValue { get; set; }
 
         /// <summary>
-        /// 规则值
+        /// 在提取值之前的预处理
         /// </summary>
-        [Required]
-        [DynamicStringLength(typeof(ExtractorInfoRuleConsts), nameof(ExtractorInfoRuleConsts.MaxRuleValueLength))]
-        public string RuleValue { get; set; }
+        [DynamicStringLength(typeof(ExtractorInfoRuleConsts), nameof(ExtractorInfoRuleConsts.MaxPreHandlersLength))]
+        public string PreHandlers { get; set; }
+
+        /// <summary>
+        /// 在提取到值之后的处理
+        /// </summary>
+        [DynamicStringLength(typeof(ExtractorInfoRuleConsts), nameof(ExtractorInfoRuleConsts.MaxAfterHandlersLength))]
+        public string AfterHandlers { get; set; }
 
         /// <summary>
         /// 描述

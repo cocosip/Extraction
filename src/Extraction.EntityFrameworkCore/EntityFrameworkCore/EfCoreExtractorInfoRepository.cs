@@ -19,7 +19,10 @@ namespace Extraction.EntityFrameworkCore
         {
         }
 
-        public override async Task<ExtractorInfo> GetAsync(Guid id, bool includeDetails = true, CancellationToken cancellationToken = default)
+        public override async Task<ExtractorInfo> GetAsync(
+            Guid id, 
+            bool includeDetails = true, 
+            CancellationToken cancellationToken = default)
         {
             return await (await GetDbSetAsync())
                 .IncludeDetails(includeDetails)

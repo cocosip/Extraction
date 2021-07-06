@@ -14,34 +14,39 @@ namespace Extraction
         public Guid ExtractorInfoId { get; set; }
 
         /// <summary>
-        /// 根级参数定义Id
+        /// 参数定义Id
         /// </summary>
-        public virtual Guid RootDefinationId { get; set; }
+        public virtual Guid ParameterDefinationId { get; set; }
 
         /// <summary>
-        /// 当前的参数定义Id
+        /// XPath SelectNodeType
         /// </summary>
-        public virtual Guid CurrentDefinationId { get; set; }
+        public virtual int SelectNodeType { get; set; }
 
         /// <summary>
-        /// 提取方式,常量或者是XPath提取
+        /// XPath 提取到的Node的处理
         /// </summary>
-        public virtual int ExtractStyle { get; set; }
+        public virtual int NodeManipulationType { get; set; }
 
         /// <summary>
-        /// 数据处理方式,1-默认,2-OCR识别
+        /// OCR的特定处理设置
         /// </summary>
         public virtual int HandleStyle { get; set; }
 
         /// <summary>
-        /// 数据类型,1-String(字符串类型),2-Base64图片
+        /// XPath提取的值
         /// </summary>
-        public virtual int DataType { get; set; }
+        public virtual string XPathValue { get; set; }
 
         /// <summary>
-        /// 规则值
+        /// 在提取值之前的预处理
         /// </summary>
-        public virtual string RuleValue { get; set; }
+        public virtual string PreHandlers { get; set; }
+
+        /// <summary>
+        /// 在提取到值之后的处理
+        /// </summary>
+        public virtual string AfterHandlers { get; set; }
 
         /// <summary>
         /// 描述
@@ -54,44 +59,47 @@ namespace Extraction
         }
 
         public ExtractorInfoRule(
-            Guid id, 
-            Guid extractorInfoId, 
-            Guid rootDefinationId, 
-            Guid currentDefinationId, 
-            int extractStyle,
+            Guid id,
+            Guid extractorInfoId,
+            Guid parameterDefinationId,
+            int selectNodeType,
+            int nodeManipulationType,
             int handleStyle,
-            int dataType,
-            string ruleValue, 
+            string xPathValue,
+            string preHandlers,
+            string afterHandlers,
             string describe)
         {
             Id = id;
             ExtractorInfoId = extractorInfoId;
-            RootDefinationId = rootDefinationId;
-            CurrentDefinationId = currentDefinationId;
-            ExtractStyle = extractStyle;
+            ParameterDefinationId = parameterDefinationId;
+            SelectNodeType = selectNodeType;
+            NodeManipulationType = nodeManipulationType;
             HandleStyle = handleStyle;
-            DataType = dataType;
-            RuleValue = ruleValue;
+            XPathValue = xPathValue;
+            PreHandlers = preHandlers;
+            AfterHandlers = afterHandlers;
             Describe = describe;
         }
 
         public void Update(
-            Guid rootDefinationId,
-            Guid currentDefinationId,
-            int extractStyle,
+            Guid parameterDefinationId,
+            int selectNodeType,
+            int nodeManipulationType,
             int handleStyle,
-            int dataType,
-            string ruleValue,
+            string xPathValue,
+            string preHandlers,
+            string afterHandlers,
             string describe)
         {
-            RootDefinationId = rootDefinationId;
-            CurrentDefinationId = currentDefinationId;
-            ExtractStyle = extractStyle;
+            ParameterDefinationId = parameterDefinationId;
+            SelectNodeType = selectNodeType;
+            NodeManipulationType = nodeManipulationType;
             HandleStyle = handleStyle;
-            DataType = dataType;
-            RuleValue = ruleValue;
+            XPathValue = xPathValue;
+            PreHandlers = preHandlers;
+            AfterHandlers = afterHandlers;
             Describe = describe;
         }
-
     }
 }

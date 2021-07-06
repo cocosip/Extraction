@@ -120,7 +120,7 @@ namespace Extraction
                 rule.ExtractorInfoId = id;
             }
             //RootDefinationId, CurrentDefinationId
-            await ValidateParameterDefinationAsync(rule.RootDefinationId, rule.CurrentDefinationId);
+            await ValidateParameterDefinationAsync(rule.ParameterDefinationId);
 
             extractorInfo.AddRule(rule);
             await ExtractorInfoRepository.UpdateAsync(extractorInfo);
@@ -144,22 +144,24 @@ namespace Extraction
         /// </summary>
         /// <param name="id"></param>
         /// <param name="ruleId"></param>
-        /// <param name="rootDefinationId"></param>
-        /// <param name="currentDefinationId"></param>
-        /// <param name="extractStyle"></param>
+        /// <param name="parameterDefinationId"></param>
+        /// <param name="selectNodeType"></param>
+        /// <param name="nodeManipulationType"></param>
         /// <param name="handleStyle"></param>
-        /// <param name="dataType"></param>
-        /// <param name="ruleValue"></param>
+        /// <param name="xPathValue"></param>
+        /// <param name="preHandlers"></param>
+        /// <param name="afterHandlers"></param>
         /// <param name="describe"></param>
         /// <returns></returns>
         public virtual async Task UpdateRuleAsync(Guid id,
             Guid ruleId,
-            Guid rootDefinationId,
-            Guid currentDefinationId,
-            int extractStyle,
+            Guid parameterDefinationId,
+            int selectNodeType,
+            int nodeManipulationType,
             int handleStyle,
-            int dataType,
-            string ruleValue,
+            string xPathValue,
+            string preHandlers,
+            string afterHandlers,
             string describe)
         {
             var extractorInfo = await ExtractorInfoRepository.GetAsync(id, true);
@@ -168,15 +170,16 @@ namespace Extraction
             {
                 throw new UserFriendlyException($"Could not find extractorInfo {id}’s rule by id '{ruleId}'");
             }
-            await ValidateParameterDefinationAsync(rootDefinationId, currentDefinationId);
+            await ValidateParameterDefinationAsync(parameterDefinationId);
 
             rule.Update(
-                rootDefinationId,
-                currentDefinationId,
-                extractStyle,
+                parameterDefinationId,
+                selectNodeType,
+                nodeManipulationType,
                 handleStyle,
-                dataType,
-                ruleValue,
+                xPathValue,
+                preHandlers,
+                afterHandlers,
                 describe);
 
             await ExtractorInfoRepository.UpdateAsync(extractorInfo);
@@ -186,61 +189,15 @@ namespace Extraction
         /// <summary>
         /// 校验提取器规则关联的参数
         /// </summary>
-        /// <param name="rootDefinationId"></param>
-        /// <param name="currentDefinationId"></param>
+        /// <param name="parameterDefinationId"></param>
         /// <returns></returns>
-        protected virtual async Task ValidateParameterDefinationAsync(Guid rootDefinationId, Guid currentDefinationId)
+        protected virtual async Task ValidateParameterDefinationAsync(Guid parameterDefinationId)
         {
-            var rootParameterDefination = await ParameterDefinationRepository.FindAsync(rootDefinationId, false);
-            if (rootParameterDefination == null)
+            var parameterDefination = await ParameterDefinationRepository.FindAsync(parameterDefinationId, false);
+            if (parameterDefination == null)
             {
-                throw new UserFriendlyException($"Could not find root parameterDefinaton '{rootDefinationId}'.");
-            }
-            if (rootParameterDefination.ParentId.HasValue)
-            {
-                throw new UserFriendlyException($"Invalid root parameterDefinaton, it's not root.");
-            }
-
-            ParameterDefination currentParameterDefination;
-            if (rootDefinationId == currentDefinationId)
-            {
-                currentParameterDefination = rootParameterDefination;
-            }
-            else
-            {
-                currentParameterDefination = await ParameterDefinationRepository.FindAsync(currentDefinationId, false);
-            }
-
-            if (currentParameterDefination == null)
-            {
-                throw new UserFriendlyException($"Could not find current parameterDefinaton '{currentDefinationId}'.");
-            }
-
-            //当前级别跟根级的不是同一个,才进行判断
-            if (rootDefinationId != currentDefinationId)
-            {
-                if (!currentParameterDefination.ParentId.HasValue)
-                {
-                    throw new UserFriendlyException($"Root parameterDefinaton not match current parameterDefinaton (Current parentId is null).");
-                }
-
-                //当前的上级不是Root
-                if (currentParameterDefination.ParentId != rootDefinationId)
-                {
-                    var parentParameterDefination = await ParameterDefinationRepository.FindAsync(currentParameterDefination.ParentId.Value, false);
-                    if (!parentParameterDefination.ParentId.HasValue)
-                    {
-                        throw new UserFriendlyException($"Root parameterDefinaton not match current parameterDefinaton (Parent parentId is null).");
-                    }
-                    //如果上级的上级Id还不是根节点,那么就超过3级,直接出错
-                    if (parentParameterDefination.ParentId.Value != rootDefinationId)
-                    {
-                        throw new UserFriendlyException($"Root parameterDefinaton not match current parameterDefinaton.");
-                    }
-                }
+                throw new UserFriendlyException($"Could not find root parameterDefinaton '{parameterDefinationId}'.");
             }
         }
-
-
     }
 }
