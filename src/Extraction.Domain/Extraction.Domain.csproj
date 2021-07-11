@@ -15,6 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.34" />
     <PackageReference Include="Volo.Abp.Ddd.Domain" Version="$(VoloAbpPackageVersion)" />
     <ProjectReference Include="..\Extraction.Domain.Shared\Extraction.Domain.Shared.csproj" />
   </ItemGroup>

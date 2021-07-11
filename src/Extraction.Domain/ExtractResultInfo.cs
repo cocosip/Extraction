@@ -35,8 +35,13 @@ namespace Extraction
         {
             Items = new List<ExtractResultItem>();
         }
-
-        public ExtractResultInfo(Guid id, string providerName, Guid extractorInfoId, string htmlContent, string resultNo) : this()
+ 
+        public ExtractResultInfo(
+            Guid id, 
+            string providerName,
+            Guid extractorInfoId,
+            string htmlContent, 
+            string resultNo) : this()
         {
             Id = id;
             ProviderName = providerName;
