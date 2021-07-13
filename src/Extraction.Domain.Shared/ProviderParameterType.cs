@@ -11,13 +11,8 @@
         Simple = 1,
 
         /// <summary>
-        /// 对象参数
-        /// </summary>
-        Object = 2,
-
-        /// <summary>
         /// 列表对象
         /// </summary>
-        List = 4
+        List = 2
     }
 }

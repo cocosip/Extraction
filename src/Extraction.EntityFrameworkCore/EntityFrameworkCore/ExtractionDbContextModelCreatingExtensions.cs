@@ -129,6 +129,80 @@ namespace Extraction.EntityFrameworkCore
                 b.Property(p => p.Describe).HasMaxLength(ExtractorInfoRuleConsts.MaxDescribeLength);
             });
 
+            //提取结果
+            builder.Entity<ExtractResultInfo>(b =>
+            {
+                b.ToTable(options.TablePrefix + "ExtractResultInfos", options.Schema);
+                b.ConfigureByConvention();
+
+                b.Property(p => p.ProviderName).IsRequired().HasMaxLength(ExtractResultInfoConsts.MaxProviderNameLength);
+                b.Property(p => p.ExtractorInfoId).IsRequired();
+                b.Property(p => p.HtmlContent).HasMaxLength(ExtractResultInfoConsts.MaxHtmlContentLength);
+                b.Property(p => p.ResultNo).IsRequired().HasMaxLength(ExtractResultInfoConsts.MaxResultNoLength);
+
+                b.HasIndex(p => p.ResultNo);
+                b.HasMany(p => p.Items).WithOne().HasForeignKey(p => p.ExtractResultId);
+            });
+
+            //提取结果项
+            builder.Entity<ExtractResultItem>(b =>
+            {
+                b.ToTable(options.TablePrefix + "ExtractResultItems", options.Schema);
+                b.ConfigureByConvention();
+
+                b.Property(p => p.ExtractResultId).IsRequired();
+                b.Property(p => p.ParameterDefinationId).IsRequired();
+                b.Property(p => p.ParameterType).IsRequired();
+                b.Property(p => p.Value).HasMaxLength(ExtractResultItemConsts.MaxValueLength);
+                b.Property(p => p.ParentId).IsRequired(false);
+
+                b.HasMany(p => p.Children).WithOne().HasForeignKey(p => p.ParentId);
+            });
+
+            //提取记录
+            builder.Entity<ExtractRecord>(b =>
+            {
+                b.ToTable(options.TablePrefix + "ExtractRecords", options.Schema);
+                b.ConfigureByConvention();
+
+                b.Property(p => p.ProviderName).IsRequired().HasMaxLength(ExtractRecordConsts.MaxProviderNameLength);
+                b.Property(p => p.ExtractorInfoId).IsRequired();
+                b.Property(p => p.HtmlContent).HasMaxLength(ExtractRecordConsts.MaxHtmlContentLength);
+                b.Property(p => p.RecordNo).IsRequired().HasMaxLength(ExtractRecordConsts.MaxResultNoLength);
+
+                b.HasIndex(p => p.RecordNo);
+                b.HasMany(p => p.Items).WithOne().HasForeignKey(p => p.ExtractRecordId);
+            });
+
+            //提取记录项
+            builder.Entity<ExtractRecordItem>(b =>
+            {
+                b.ToTable(options.TablePrefix + "ExtractRecordItems", options.Schema);
+                b.ConfigureByConvention();
+
+                b.Property(p => p.ExtractRecordId).IsRequired();
+                b.Property(p => p.ParameterDefinationId).IsRequired();
+                b.Property(p => p.ParameterType).IsRequired();
+                b.Property(p => p.Value).HasMaxLength(ExtractRecordItemConsts.MaxValueLength);
+                b.Property(p => p.ParentId).IsRequired(false);
+
+                b.HasMany(p => p.Children).WithOne().HasForeignKey(p => p.ParentId);
+            });
+
+            //提取记录索引
+            builder.Entity<ExtractRecordIndex>(b =>
+            {
+                b.ToTable(options.TablePrefix + "ExtractRecordIndexs", options.Schema);
+                b.ConfigureByConvention();
+
+                b.Property(p => p.ExtractRecordId).IsRequired();
+                b.Property(p => p.ProviderName).IsRequired().HasMaxLength(ExtractRecordIndexConsts.MaxProviderNameLength);
+                b.Property(p => p.ParameterName).IsRequired().HasMaxLength(ExtractRecordIndexConsts.MaxParameterNameLength);
+                b.Property(p => p.ParameterType).IsRequired();
+                b.Property(p => p.ValueHash).HasMaxLength(ExtractRecordIndexConsts.MaxValueHashLength);
+
+                b.HasIndex(p => p.ValueHash);
+            });
         }
     }
 }

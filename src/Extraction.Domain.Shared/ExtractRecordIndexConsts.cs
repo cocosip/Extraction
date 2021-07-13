@@ -1,6 +1,6 @@
 ﻿namespace Extraction
 {
-    public static class ExtractResultInfoConsts
+    public static class ExtractRecordIndexConsts
     {
         /// <summary>
         /// Default value:32
@@ -8,13 +8,13 @@
         public static int MaxProviderNameLength { get; set; } = 32;
 
         /// <summary>
-        /// Default value:40
+        /// Default value:32
         /// </summary>
-        public static int MaxResultNoLength { get; set; } = 32;
+        public static int MaxParameterNameLength { get; set; } = 32;
 
         /// <summary>
-        /// Default value: 2000
+        /// Default value:64
         /// </summary>
-        public static int MaxHtmlContentLength { get; set; } = 2000;
+        public static int MaxValueHashLength { get; set; } = 64;
     }
 }

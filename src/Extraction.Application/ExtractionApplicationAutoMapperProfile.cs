@@ -20,6 +20,8 @@ namespace Extraction
                 .ForMember(dest => dest.Url, s => s.Ignore());
             CreateMap<ExtractorInfoRule, ExtractorInfoRuleDto>();
 
+            CreateMap<ExtractResultInfo, ExtractResultInfoDto>();
+            CreateMap<ExtractRecord, ExtractRecordDto>();
         }
     }
 }

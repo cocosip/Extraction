@@ -4,12 +4,12 @@ using Volo.Abp.Application.Dtos;
 
 namespace Extraction
 {
-    public class ExtractResultItemDto : CreationAuditedEntityDto<Guid>
+    public class ExtractRecordItemDto : EntityDto<Guid>
     {
         /// <summary>
         /// 提取结果Id
         /// </summary>
-        public Guid ExtractResultId { get; set; }
+        public Guid ExtractRecordId { get; set; }
 
         /// <summary>
         /// 参数Id
@@ -28,11 +28,11 @@ namespace Extraction
 
         public Guid? ParentId { get; set; }
 
-        public List<ExtractResultItemDto> Children { get; set; }
+        public List<ExtractRecordItemDto> Children { get; set; }
 
-        public ExtractResultItemDto()
+        public ExtractRecordItemDto()
         {
-            Children = new List<ExtractResultItemDto>();
+            Children = new List<ExtractRecordItemDto>();
         }
     }
 }

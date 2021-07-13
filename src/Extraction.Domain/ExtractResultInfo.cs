@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace Extraction
@@ -35,12 +36,12 @@ namespace Extraction
         {
             Items = new List<ExtractResultItem>();
         }
- 
+
         public ExtractResultInfo(
-            Guid id, 
+            Guid id,
             string providerName,
             Guid extractorInfoId,
-            string htmlContent, 
+            string htmlContent,
             string resultNo) : this()
         {
             Id = id;
@@ -50,5 +51,14 @@ namespace Extraction
             ResultNo = resultNo;
         }
 
+
+        public void AddItem(ExtractResultItem item)
+        {
+            var queryItem = Items.FirstOrDefault(x => x.Id == item.Id);
+            if (queryItem == null)
+            {
+                Items.Add(item);
+            }
+        }
     }
 }

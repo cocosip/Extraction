@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace Extraction
@@ -48,5 +49,13 @@ namespace Extraction
             RecordNo = recordNo;
         }
 
+        public void AddItem(ExtractRecordItem item)
+        {
+            var queryItem = Items.FirstOrDefault(x => x.Id == item.Id);
+            if (queryItem == null)
+            {
+                Items.Add(item);
+            }
+        }
     }
 }

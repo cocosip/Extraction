@@ -1,6 +1,6 @@
 ﻿namespace Extraction
 {
-    public static class ExtractResultInfoConsts
+    public static class ExtractRecordConsts
     {
         /// <summary>
         /// Default value:32

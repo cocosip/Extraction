@@ -88,29 +88,6 @@ namespace Extraction
                         value));
                 }
 
-                //对象类型
-                if (parameterDefination.ParameterType == (int)ProviderParameterType.Object)
-                {
-                    var value = "";
-                    //获取当前的规则
-                    var rule = extractorInfo.Rules.FirstOrDefault(x => x.ParameterDefinationId == parameterDefination.Id);
-                    if (rule != null)
-                    {
-                        var node = doc.DocumentNode.SelectSingleNode(rule.XPathValue);
-                        value = GetNodeValue(node, rule.NodeManipulationType);
-                        if (rule.HandleStyle == (int)HandleStyle.Ocr)
-                        {
-                            //进行ocr识别
-                        }
-                    }
-                    result.Items.Add(new ExtractResultItem(
-                        GuidGenerator.Create(),
-                        rule.Id,
-                        parameterDefination.Id,
-                        parameterDefination.ParameterType,
-                        value));
-                }
-
                 //List类型
                 if (parameterDefination.ParameterType == (int)ProviderParameterType.List)
                 {
@@ -122,7 +99,9 @@ namespace Extraction
                         rule.Id,
                         parameterDefination.Id,
                         parameterDefination.ParameterType,
-                        "");
+                        "",
+                        null);
+
                     result.Items.Add(item);
 
                     if (rule != null)
@@ -147,7 +126,8 @@ namespace Extraction
                                         childRule.Id,
                                         childParameterDefination.Id,
                                         parameterDefination.ParameterType,
-                                        childValue));
+                                        childValue,
+                                        item.Id));
                                 }
                             }
                         }

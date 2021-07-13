@@ -32,6 +32,26 @@ namespace Extraction
         /// 参数值Hash
         /// </summary>
         public virtual string ValueHash { get; set; }
-    
+
+        public ExtractRecordIndex()
+        {
+
+        }
+
+        public ExtractRecordIndex(
+            Guid id,
+            Guid extractRecordId,
+            string providerName,
+            string parameterName,
+            int parameterType,
+            string valueHash)
+        {
+            Id = id;
+            ExtractRecordId = extractRecordId;
+            ProviderName = providerName;
+            ParameterName = parameterName;
+            ParameterType = parameterType;
+            ValueHash = valueHash;
+        }
     }
 }

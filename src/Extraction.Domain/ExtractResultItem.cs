@@ -29,6 +29,8 @@ namespace Extraction
         /// </summary>
         public virtual string Value { get; set; }
 
+        public virtual Guid? ParentId { get; set; }
+
         public virtual ICollection<ExtractResultItem> Children { get; protected set; }
 
         public ExtractResultItem()
@@ -36,13 +38,25 @@ namespace Extraction
             Children = new List<ExtractResultItem>();
         }
 
-        public ExtractResultItem(Guid id, Guid extractResultId, Guid parameterDefinationId, int parameterType, string value) : this()
+        public ExtractResultItem(
+            Guid id,
+            Guid extractResultId,
+            Guid parameterDefinationId,
+            int parameterType,
+            string value,
+            Guid? parentId = null) : this()
         {
             Id = id;
             ExtractResultId = extractResultId;
             ParameterDefinationId = parameterDefinationId;
             ParameterType = parameterType;
             Value = value;
+            ParentId = parentId;
+        }
+
+        public void AddChild(ExtractResultItem childItem)
+        {
+            Children.Add(childItem);
         }
 
 

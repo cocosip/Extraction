@@ -19,6 +19,7 @@ namespace Extraction
         /// </summary>
         public virtual Guid ParameterDefinationId { get; set; }
 
+
         /// <summary>
         /// 参数类型
         /// </summary>
@@ -29,6 +30,11 @@ namespace Extraction
         /// </summary>
         public virtual string Value { get; set; }
 
+        /// <summary>
+        /// 上级参数
+        /// </summary>
+        public virtual Guid? ParentId { get; set; }
+
         public virtual ICollection<ExtractRecordItem> Children { get; protected set; }
 
         public ExtractRecordItem()
@@ -36,13 +42,26 @@ namespace Extraction
             Children = new List<ExtractRecordItem>();
         }
 
-        public ExtractRecordItem(Guid id, Guid extractRecordId, Guid parameterDefinationId, int parameterType, string value) : this()
+        public ExtractRecordItem(
+            Guid id,
+            Guid extractRecordId,
+            Guid parameterDefinationId,
+            int parameterType,
+            string value,
+            Guid? parentId = null) : this()
         {
             Id = id;
             ExtractRecordId = extractRecordId;
             ParameterDefinationId = parameterDefinationId;
             ParameterType = parameterType;
             Value = value;
+            ParentId = parentId;
+        }
+
+
+        public void AddChild(ExtractRecordItem childItem)
+        {
+            Children.Add(childItem);
         }
     }
 }
