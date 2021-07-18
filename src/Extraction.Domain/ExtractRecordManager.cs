@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Volo.Abp;
@@ -8,16 +9,22 @@ namespace Extraction
 {
     public class ExtractRecordManager : DomainService, IExtractRecordManager
     {
+        protected ExtractionOptions Options { get; }
+        protected IParameterCalculator ParameterCalculator { get; }
         protected IExtractResultInfoRepository ExtractResultInfoRepository { get; }
         protected IExtractRecordRepository ExtractRecordRepository { get; }
         protected IExtractorProviderRepository ExtractorProviderRepository { get; }
         protected IExtractorInfoRepository ExtractorInfoRepository { get; }
         public ExtractRecordManager(
+            IOptions<ExtractionOptions> options,
+            IParameterCalculator parameterCalculator,
             IExtractResultInfoRepository extractResultInfoRepository,
             IExtractRecordRepository extractRecordRepository,
             IExtractorProviderRepository extractorProviderRepository,
             IExtractorInfoRepository extractorInfoRepository)
         {
+            Options = options.Value;
+            ParameterCalculator = parameterCalculator;
             ExtractResultInfoRepository = extractResultInfoRepository;
             ExtractRecordRepository = extractRecordRepository;
             ExtractorProviderRepository = extractorProviderRepository;
@@ -80,7 +87,16 @@ namespace Extraction
                     var currentItem = extractRecord.Items.FirstOrDefault(x => x.ParameterDefinationId == parameterDefination.Id);
                     if (currentItem != null)
                     {
-                         //var index=new ExtractRecordIndex(GuidGenerator.Create(),currentItem.ExtractRecordId,extractRecord.ProviderName,currentItem.ParameterName)
+                        var hash = ParameterCalculator.CalculateHash(currentItem.Value);
+                        var recordIndex = new ExtractRecordIndex(
+                            GuidGenerator.Create(),
+                            currentItem.ExtractRecordId,
+                            extractRecord.ProviderName,
+                            parameterDefination.Name,
+                            parameterDefination.ParameterType,
+                            hash);
+
+                        extractRecord.AddIndex(recordIndex);
                     }
                 }
             }
@@ -90,5 +106,44 @@ namespace Extraction
             return extractRecord.Id;
         }
 
+        /// <summary>
+        /// 根据提取结果,检索对应的记录
+        /// </summary>
+        /// <param name="resultId"></param>
+        /// <returns></returns>
+        public virtual async Task<Guid?> SearchByResultAsync(Guid resultId)
+        {
+            var extractResultInfo = await ExtractResultInfoRepository.GetAsync(resultId, true);
+            if (extractResultInfo == null)
+            {
+                throw new AbpException($"根据提取结果 '{resultId}'查询提取器出错,结果不存在.");
+            }
+
+            //查询提取器管道
+            var extractorProvider = await ExtractorProviderRepository.FindByNameAsync(extractResultInfo.ProviderName, true);
+            //foreach (var parameterDefination in extractorProvider.Definations)
+            //{
+            //    if (parameterDefination.ParameterUseStyle == (int)ParameterUseStyle.All)
+            //    {
+            //        var currentItem = extractRecord.Items.FirstOrDefault(x => x.ParameterDefinationId == parameterDefination.Id);
+            //        if (currentItem != null)
+            //        {
+            //            var hash = ParameterCalculator.CalculateHash(currentItem.Value);
+            //            var recordIndex = new ExtractRecordIndex(
+            //                GuidGenerator.Create(),
+            //                currentItem.ExtractRecordId,
+            //                extractRecord.ProviderName,
+            //                parameterDefination.Name,
+            //                parameterDefination.ParameterType,
+            //                hash);
+
+            //            extractRecord.AddIndex(recordIndex);
+            //        }
+            //    }
+            //}
+
+
+            return null;
+        }
     }
 }

@@ -40,7 +40,12 @@ namespace Extraction
             Indexs = new List<ExtractRecordIndex>();
         }
 
-        public ExtractRecord(Guid id, string providerName, Guid extractorInfoId, string htmlContent, string recordNo) : this()
+        public ExtractRecord(
+            Guid id,
+            string providerName,
+            Guid extractorInfoId,
+            string htmlContent,
+            string recordNo) : this()
         {
             Id = id;
             ProviderName = providerName;
@@ -57,5 +62,15 @@ namespace Extraction
                 Items.Add(item);
             }
         }
+
+        public void AddIndex(ExtractRecordIndex index)
+        {
+            var queryIndex = Indexs.FirstOrDefault(x => x.Id == index.Id);
+            if (queryIndex == null)
+            {
+                Indexs.Add(index);
+            }
+        }
+
     }
 }

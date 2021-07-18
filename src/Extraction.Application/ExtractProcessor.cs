@@ -11,16 +11,19 @@ namespace Extraction
     public class ExtractProcessor : IExtractProcessor, ITransientDependency
     {
         protected IGuidGenerator GuidGenerator { get; }
+        protected IOcrService OcrService { get; }
         protected IExtractorInfoRepository ExtractorInfoRepository { get; }
         protected IExtractorProviderRepository ExtractorProviderRepository { get; }
         protected IExtractResultInfoRepository ExtractResultInfoRepository { get; }
         public ExtractProcessor(
             IGuidGenerator guidGenerator,
+            IOcrService ocrService,
             IExtractorInfoRepository extractorInfoRepository,
             IExtractorProviderRepository extractorProviderRepository,
             IExtractResultInfoRepository extractResultInfoRepository)
         {
             GuidGenerator = guidGenerator;
+            OcrService = ocrService;
             ExtractorInfoRepository = extractorInfoRepository;
             ExtractorProviderRepository = extractorProviderRepository;
             ExtractResultInfoRepository = extractResultInfoRepository;
@@ -72,6 +75,9 @@ namespace Extraction
                         if (rule.HandleStyle == (int)HandleStyle.Ocr)
                         {
                             //OCR 识别
+                            var node = doc.DocumentNode.SelectSingleNode(rule.XPathValue);
+                            var base64 = GetNodeValue(node, rule.NodeManipulationType);
+                            value = OcrService.Recognize(base64);
                         }
                         else
                         {
