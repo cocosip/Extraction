@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
@@ -44,6 +45,9 @@ namespace Extraction.EntityFrameworkCore
                 .FirstOrDefaultAsync(x => x.RecordNo == recordNo, GetCancellationToken(cancellationToken));
         }
 
-
+        public async Task<IQueryable<ExtractRecord>> AsQueryableAsync()
+        {
+            return (await GetDbSetAsync()).AsQueryable();
+        }
     }
 }

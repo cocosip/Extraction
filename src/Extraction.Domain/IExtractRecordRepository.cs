@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
@@ -15,5 +16,11 @@ namespace Extraction
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         Task<ExtractRecord> FindByRecordNoAsync(string recordNo, bool includeDetails = true, CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Queryable
+        /// </summary>
+        /// <returns></returns>
+        Task<IQueryable<ExtractRecord>> AsQueryableAsync();
     }
 }
